@@ -28,33 +28,41 @@ signupBtn.addEventListener('click', (e) => {
 });
 
 
-document.querySelector(".submit-signup-btn").addEventListener("click", function(e) {
-    e.preventDefault();
+// document.querySelector(".submit-signup-btn").addEventListener("click", function(e) {
+//     e.preventDefault();
 
-    var email = document.querySelector('input[name="email"]').value;
-    var password1 = document.querySelector('input[name="password1"]').value;
-    var password2 = document.querySelector('input[name="password2"]').value;
+//     var email = document.querySelector('input[name="email"]').value;
+//     var password1 = document.querySelector('input[name="password1"]').value;
+//     var password2 = document.querySelector('input[name="password2"]').value;
 
-    var errorDiv = document.getElementById("signup-error-messages");
-    var errorMessage = "";
+//     var errorDiv = document.getElementById("signup-error-messages");
+//     var errorMessage = "";
 
-    // Check if email exists using AJAX
-    fetch('/check_email/?email=' + email)
-        .then(response => response.json())
-        .then(data => {
-            if (data.exists) {
-                errorMessage = "Email already exists.";
-                errorDiv.style.display = "block";
-                errorDiv.innerHTML = errorMessage;
-            } else if (password1 !== password2) {
-                errorMessage = "Passwords do not match.";
-                errorDiv.style.display = "block";
-                errorDiv.innerHTML = errorMessage;
-            } else {
-                errorDiv.style.display = "none";
-                document.querySelector(".signup form").submit();
-            }
-        });
-});
+//     // Check if email exists using AJAX
+//     fetch('/check_email/?email=' + email)
+//         .then(response => {
+//             if (!response.ok) {
+//                 throw new Error("Network response was not ok");
+//             }
+//             return response.json();
+//         })
+//         .then(data => {
+//             if (data.exists) {
+//                 errorMessage = "Email already exists.";
+//                 errorDiv.style.display = "block";
+//                 errorDiv.innerHTML = errorMessage;
+//             } else if (password1 !== password2) {
+//                 errorMessage = "Passwords do not match.";
+//                 errorDiv.style.display = "block";
+//                 errorDiv.innerHTML = errorMessage;
+//             } else {
+//                 errorDiv.style.display = "none";
+//                 document.querySelector(".signup form").submit();
+//             }
+//         })
+//         .catch(error => {
+//             console.error("There was a problem with the fetch operation:", error.message);
+//         });
+// });
 
 

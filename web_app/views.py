@@ -12,25 +12,25 @@ from .models import CustomUser
 # MAIN VIEWS
 ####################################################################################
 def home(request):
-    return render(request, 'home.html')
+    return render(request, 'home/home.html')
 
 
 def blog(request):
-    return render(request, 'main_blog.html')
+    return render(request, 'blog/main_blog.html')
 
 
 def tech_blog(request):
-    return render(request, 'main_tech_blog.html')
+    return render(request, 'tech_blog/main_tech_blog.html')
 
 def ebook_pictures(request):
     if request.user.is_authenticated:
-        return render(request, 'ebook_pictures.html')
+        return render(request, 'ebook_pictures/ebook_pictures.html')
     else:
-        return render(request, 'login_required_prompt.html')
+        return render(request, 'auth/login_required_prompt.html')
 
 
 def contacts(request):
-    return render(request, 'contacts.html')
+    return render(request, 'contacts/contacts.html')
 
 
 ####################################################################################
@@ -53,6 +53,7 @@ def signup(request):
             # Redirect to a success page or home page after signup
             return redirect('home')
         else:
+            print(form.errors)
             if 'email' in form.errors:
                 messages.error(request, 'An account with this email already exists. Please use a different email or log in.')
             else:
@@ -60,7 +61,7 @@ def signup(request):
     else:
         form = CustomUserCreationForm()
 
-    return render(request, 'login.html', {'form': form})
+    return render(request, 'auth/login.html', {'form': form})
 
 def login(request):
     if request.method == 'POST':
@@ -74,7 +75,7 @@ def login(request):
             return redirect('home')
         else:
             messages.error(request, 'Invalid email or password.')
-    return render(request, 'login.html')
+    return render(request, 'auth/login.html')
 
 def logout(request):
     auth_logout(request)
