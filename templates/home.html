@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+</header>
+
+    <section id="intro">
+        <div id="intro-info">
+            <div>
+                <h1>Hello</h1>
+                <div id="intro-tag-btn">
+                    <span>Mình là Tú. Rất vui khi cậu truy cập vào trang web nhỏ nào. </span>
+                    <a href="#delivery" class="brand-btn">Bắt đầu thôi</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="development-img">
+            <img src="{% static '/img/coder_image.png' %}" alt="Mobile App Development" title="Mobile App Development"/>
+        </div>
+    </section>
+
+    <section id="delivery">
+        <h1 class="sec-heading">Về Bản Thân Mình</h1>
+        <div class="col-5 delivery-img">
+            <img src="https://www.dropbox.com/s/ipx91osglyczpdt/delivery_experience.svg?raw=1" alt="Productivity Delivering Experience" title="Delivering Experience Since 2009"/>
+        </div>
+        <div class="col-7">
+            <h2>Vài thông tin nhỏ</h2>
+            <p>
+                Một vài thông tin chi tiết.
+            </p>
+            <div class="btn-footer">
+                <a href="#success-story" class="brand-btn">Vài câu chuyện nhỏ</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="success-story">
+        <h1 class="sec-heading">Vài chia sẻ nhỏ của mình</h1>
+
+        <div class="slider">
+            <div class="col-6 slide-text">
+                <div>
+                    <h2>Story</h2>
+                    <p>
+                        Vài câu chuyện nhỏ.
+                    </p>
+                    <a href="#services" class="brand-btn">Những thứ ở đây</a>
+                </div>
+            </div>
+            <div class="col-6 slide-img">
+                <img src="https://www.dropbox.com/s/ipx91osglyczpdt/delivery_experience.svg?raw=1" alt="World Travel App Development" title="World Travel Protection"/>
+            </div>
+        </div>
+    </section>
+
+    <section id="services">
+        <h1 class="sec-heading">Những thứ ở đây</h1>
+        <ul>
+            <li>
+                <div>
+                    <a href="">
+                        <i class="fas fa-coffee"></i><span>Blog</span>
+                    </a>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <a href="">
+                        <i class="fas fa-keyboard"></i><span>Tech Blog</span>
+                    </a>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <a href="">
+                        <i class="fas fa-camera-retro"></i><span>Ebook Pictures</span>
+                    </a>
+                </div>
+            </li>
+            <li>
+                <div>
+                    <a href="">
+                        <i class="fab fa-instagram"></i><span>Contacts</span>
+                    </a>
+                </div>
+            </li>
+        </ul>
+
+        <div id="service-footer">
+            <a href="{% url 'contacts' %}" class="brand-btn">Contacts</a>
+        </div>
+    </section>
+
+{% endblock %}
