@@ -1,0 +1,12 @@
+{% extends "base/base.html" %}
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'css/blog/blog_styles.css' %}">
+    <section id="main-blog">
+            <h1 style="padding-bottom: 10px;">{{ post.title }}</h1>
+            <img class="rounded-corners featured-image" src="{{ post.image.url }}" alt="{{ post.title }}">
+            <p>Published on: {{ post.date_published }}</p>
+            <div>{{ post.full_content|safe }}</div>
+    </section>
+{% endblock %}

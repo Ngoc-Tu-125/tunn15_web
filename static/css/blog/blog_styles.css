@@ -171,5 +171,10 @@ main{
 }
 
 img.rounded-corners {
-    border-radius: 25px;
+  border-radius: 25px;
+}
+
+img.featured-image {
+  width: 800px;
+  height: 508px;
 }

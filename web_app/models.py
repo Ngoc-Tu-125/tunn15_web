@@ -3,6 +3,7 @@ from django.db import models
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
+from ckeditor_uploader.fields import RichTextUploadingField
 
 from .managers import CustomUserManager
 
@@ -18,3 +19,15 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.email
+
+
+class BlogPost(models.Model):
+    title = models.CharField(max_length=255)
+    image = models.ImageField(upload_to='blog_images/', null=True, blank=True, help_text="Upload an image for the blog post.")
+    date_published = models.DateField()
+    body_snippet = models.TextField()
+    full_content = RichTextUploadingField()
+    slug = models.SlugField(unique=True)
+
+    def __str__(self):
+        return self.title

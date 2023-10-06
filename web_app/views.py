@@ -1,11 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login as auth_login, authenticate
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import JsonResponse
 from .forms import CustomUserCreationForm
-from .models import CustomUser
+from .models import CustomUser, BlogPost
 
 
 ####################################################################################
@@ -13,10 +13,6 @@ from .models import CustomUser
 ####################################################################################
 def home(request):
     return render(request, 'home/home.html')
-
-
-def blog(request):
-    return render(request, 'blog/main_blog.html')
 
 
 def tech_blog(request):
@@ -27,7 +23,6 @@ def ebook_pictures(request):
         return render(request, 'ebook_pictures/ebook_pictures.html')
     else:
         return render(request, 'auth/login_required_prompt.html')
-
 
 def contacts(request):
     return render(request, 'contacts/contacts.html')
@@ -80,3 +75,26 @@ def login(request):
 def logout(request):
     auth_logout(request)
     return redirect('home')
+
+
+####################################################################################
+# BLOG PAGE
+####################################################################################
+def blog_home(request):
+    # Fetch all blog posts from the database
+    articles = BlogPost.objects.all()
+
+    # Add a class attribute for the template. For simplicity, we'll use the same class for all articles here.
+    for article in articles:
+        article.class_name = "article-featured"  # You can modify this logic to differentiate between featured and recent articles
+
+    # Render the blog page with the fetched articles
+    return render(request, 'blog/main_blog.html', {'articles': articles})
+
+
+def blog_detail(request, post_slug):
+    # Fetch the blog post based on the provided slug
+    post = get_object_or_404(BlogPost, slug=post_slug)
+
+    # Render the detailed view template
+    return render(request, 'blog/blog_detail_template.html', {'post': post})

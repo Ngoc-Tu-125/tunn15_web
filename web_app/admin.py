@@ -2,8 +2,13 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from .forms import CustomUserCreationForm, CustomUserChangeForm
-from .models import CustomUser
+from .models import CustomUser, BlogPost
 
+
+@admin.register(BlogPost)
+class BlogPostAdmin(admin.ModelAdmin):
+    list_display = ('title', 'date_published',)  # Customize the fields you want to display in the list view
+    search_fields = ('title',)  # Allow searching by title
 
 class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
