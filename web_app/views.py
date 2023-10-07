@@ -1,20 +1,20 @@
+import json
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login as auth_login, authenticate
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from .forms import CustomUserCreationForm
 from .models import CustomUser, BlogPost
+from .models import HomePageContent
 
 
 ####################################################################################
 # MAIN VIEWS
 ####################################################################################
-def home(request):
-    return render(request, 'home/home.html')
-
-
 def tech_blog(request):
     return render(request, 'tech_blog/main_tech_blog.html')
 
@@ -27,6 +27,54 @@ def ebook_pictures(request):
 def contacts(request):
     return render(request, 'contacts/contacts.html')
 
+
+####################################################################################
+# EDIT HOME PAGE
+####################################################################################
+def home(request):
+    is_staff = request.user.is_staff
+    intro_content = HomePageContent.objects.get_or_create(section_name='intro', defaults={'title': "Xin chào", 'content': "Rất vui vì mọi người đã ghé thăm trang web nhỏ này."})[0]
+    delivery_content = HomePageContent.objects.get_or_create(section_name='delivery', defaults={'title': "Về Bản Thân Mình", 'content': "Vài thông tin nhỏ"})[0]
+    success_story_content = HomePageContent.objects.get_or_create(section_name='success-story', defaults={'title': "Vài chia sẻ nhỏ của mình", 'content': "Vài câu chuyện nhỏ"})[0]
+
+    return render(request, 'home/home.html', {'intro_content': intro_content, 'delivery_content': delivery_content, 'success_story_content': success_story_content, 'is_staff': is_staff})
+
+@csrf_exempt
+def upload_image(request, section_name):
+    if request.method == 'POST' and request.user.is_staff:
+        uploaded_image = request.FILES.get('image')
+
+        # Get the specific section or create a new one if none exists
+        section_content, _ = HomePageContent.objects.get_or_create(section_name=section_name)
+
+        # Update the image
+        section_content.image = uploaded_image
+        section_content.save()
+
+        return JsonResponse({'success': True})
+
+    return JsonResponse({'success': False})
+
+@csrf_exempt
+def save_content(request, section_name):
+    if request.method == 'POST' and request.user.is_staff:
+        data = json.loads(request.body)
+        title = data.get('title')
+        content = data.get('content')
+
+        # Get the specific section or create a new one if none exists
+        section_content, _ = HomePageContent.objects.get_or_create(section_name=section_name)
+
+        # Update the title and content
+        if title:
+            section_content.title = title
+        if content:
+            section_content.content = content
+        section_content.save()
+
+        return JsonResponse({'success': True})
+
+    return JsonResponse({'success': False})
 
 ####################################################################################
 # SIGN IN VIEWS
@@ -81,15 +129,32 @@ def logout(request):
 # BLOG PAGE
 ####################################################################################
 def blog_home(request):
-    # Fetch all blog posts from the database
-    articles = BlogPost.objects.all()
+    articles_list = BlogPost.objects.all().order_by('-date_published')
+    paginator = Paginator(articles_list, 3)  # Show 10 articles per page
 
-    # Add a class attribute for the template. For simplicity, we'll use the same class for all articles here.
-    for article in articles:
-        article.class_name = "article-featured"  # You can modify this logic to differentiate between featured and recent articles
+    page = request.GET.get('page')
+    try:
+        articles = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        articles = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        articles = paginator.page(paginator.num_pages)
 
-    # Render the blog page with the fetched articles
-    return render(request, 'blog/main_blog.html', {'articles': articles})
+    if articles:
+        # Add a class attribute for the template to the latest article
+        articles[0].class_name = "article-featured"
+
+        # For the rest of the articles, assign the class 'article-recent'
+        for article in articles[1:]:
+            article.class_name = "article-recent"
+
+    # Fetch the three latest posts for the sidebar
+    lastest_posts = BlogPost.objects.all().order_by('-date_published')[:3]
+
+    # Render the blog page with the fetched articles and lastest_posts
+    return render(request, 'blog/main_blog.html', {'articles': articles, 'lastest_posts': lastest_posts})
 
 
 def blog_detail(request, post_slug):

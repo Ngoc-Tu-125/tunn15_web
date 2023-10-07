@@ -31,3 +31,13 @@ class BlogPost(models.Model):
 
     def __str__(self):
         return self.title
+
+
+####################################################################################
+# HOME PAGE CONTENT MODELS
+####################################################################################
+class HomePageContent(models.Model):
+    section_name = models.CharField(max_length=255)  # 'intro', 'delivery', 'success-story'
+    title = models.TextField(null=True, blank=True)
+    content = models.TextField(null=True, blank=True)
+    image = models.ImageField(upload_to='images/', null=True, blank=True)

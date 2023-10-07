@@ -4,55 +4,118 @@
 
 {% block content %}
 </header>
-
+    <link rel='stylesheet' href="{% static 'css/home/home_styles.css' %}">
     <section id="intro">
         <div id="intro-info">
             <div>
-                <h1>Hello</h1>
+                <h1 id="display-title-intro">{{ intro_content.title }}</h1>
+                <textarea id="editable-title-intro" class="hidden">{{ intro_content.title }}</textarea>
+
                 <div id="intro-tag-btn">
-                    <span>Mình là Tú. Rất vui khi cậu truy cập vào trang web nhỏ nào. </span>
+                    <span id="display-content-intro">{{ intro_content.content }}</span>
+                    <textarea id="editable-content-intro" class="hidden">{{ intro_content.content }}</textarea>
+
                     <a href="#delivery" class="brand-btn">Bắt đầu thôi</a>
                 </div>
             </div>
         </div>
-
         <div id="development-img">
-            <img src="{% static '/img/coder_image.png' %}" alt="Mobile App Development" title="Mobile App Development"/>
+            {% if intro_content.image %}
+                <img src="{{ intro_content.image.url }}" alt="Image Description" title="Description" />
+            {% else %}
+                <img src="https://www.dropbox.com/s/7hwnjccu15vt90e/mobileDevlopment.svg?raw=1" alt="Image Description" title="Description" />
+            {% endif %}
+            {% if is_staff %}
+                <input type="file" id="image-upload-intro" class="hidden" onchange="previewImage(this, 'display-img-intro')" />
+                <button onclick="document.getElementById('image-upload-intro').click()">Update Image</button>
+                <button id="upload-button-intro" class="hidden" onclick="uploadImage('intro')">Upload</button>
+            {% endif %}
         </div>
+        {% if is_staff %}
+            <div class="update-buttons">
+                <button onclick="editContent('display-title-intro', 'editable-title-intro', 'update-title-intro')">Update Title</button>
+                <button id="update-title-intro" class="hidden" onclick="saveContent('editable-title-intro', 'display-title-intro', 'intro', 'title')">Save Title</button>
+                <button onclick="editContent('display-content-intro', 'editable-content-intro', 'update-content-intro')">Update Content</button>
+                <button id="update-content-intro" class="hidden" onclick="saveContent('editable-content-intro', 'display-content-intro', 'intro', 'content')">Save Content</button>
+            </div>
+        {% endif %}
     </section>
 
     <section id="delivery">
-        <h1 class="sec-heading">Về Bản Thân Mình</h1>
+        <h1 id="display-title-delivery" class="sec-heading">{{ delivery_content.title }}</h1>
+        <textarea id="editable-title-delivery" class="hidden"></textarea>
+
         <div class="col-5 delivery-img">
-            <img src="https://www.dropbox.com/s/ipx91osglyczpdt/delivery_experience.svg?raw=1" alt="Productivity Delivering Experience" title="Delivering Experience Since 2009"/>
+            {% if delivery_content.image %}
+                <img src="{{ delivery_content.image.url }}" alt="Image Description" title="Description"/>
+            {% else %}
+                <img src="https://www.dropbox.com/s/ipx91osglyczpdt/delivery_experience.svg?raw=1" alt="Image Description" title="Description"/>
+            {% endif %}
+
+            {% if is_staff %}
+                <input type="file" id="image-upload-delivery" class="hidden" onchange="previewImage(this, 'display-img-delivery')" />
+                <button onclick="document.getElementById('image-upload-delivery').click()">Update Image</button>
+                <button id="upload-button-delivery" class="hidden" onclick="uploadImage('delivery')">Upload</button>
+
+            {% endif %}
         </div>
         <div class="col-7">
-            <h2>Vài thông tin nhỏ</h2>
-            <p>
-                Một vài thông tin chi tiết.
-            </p>
+            {% comment %} <h2 id="display-title-delivery">{{ delivery_content.title }}</h2>
+            <textarea id="editable-title-delivery" class="hidden"></textarea> {% endcomment %}
+
+            <p id="display-content-delivery">{{ delivery_content.content }}</p>
+            <textarea id="editable-content-delivery" class="hidden"></textarea>
+
             <div class="btn-footer">
                 <a href="#success-story" class="brand-btn">Vài câu chuyện nhỏ</a>
             </div>
+
+            {% if is_staff %}
+                <div class="update-buttons">
+                    <button onclick="editContent('display-title-delivery', 'editable-title-delivery', 'update-title-delivery')">Update Title</button>
+                    <button id="update-title-delivery" class="hidden" onclick="saveContent('editable-title-delivery', 'display-title-delivery', 'delivery', 'title')">Save Title</button>
+                    <button onclick="editContent('display-content-delivery', 'editable-content-delivery', 'update-content-delivery')">Update Content</button>
+                    <button id="update-content-delivery" class="hidden" onclick="saveContent('editable-content-delivery', 'display-content-delivery', 'delivery', 'content')">Save Content</button>
+                </div>
+            {% endif %}
         </div>
     </section>
 
     <section id="success-story">
-        <h1 class="sec-heading">Vài chia sẻ nhỏ của mình</h1>
+        <h1 id="display-title-success" class="sec-heading">{{ success_story_content.title }}</h1>
+        <textarea id="editable-title-success" class="hidden"></textarea>
 
         <div class="slider">
             <div class="col-6 slide-text">
                 <div>
-                    <h2>Story</h2>
-                    <p>
-                        Vài câu chuyện nhỏ.
-                    </p>
+                    <p id="display-content-success">{{ success_story_content.content }}</p>
+                    <textarea id="editable-content-success" class="hidden"></textarea>
+
                     <a href="#services" class="brand-btn">Những thứ ở đây</a>
                 </div>
             </div>
             <div class="col-6 slide-img">
-                <img src="https://www.dropbox.com/s/ipx91osglyczpdt/delivery_experience.svg?raw=1" alt="World Travel App Development" title="World Travel Protection"/>
+                {% if success_story_content.image %}
+                    <img id="display-img-success" src="{{ success_story_content.image.url }}" alt="Image Description" title="Description"/>
+                {% else %}
+                    <img src="https://www.dropbox.com/s/ipx91osglyczpdt/delivery_experience.svg?raw=1" alt="Image Description" title="Description"/>
+                {% endif %}
+
+                {% if is_staff %}
+                    <input type="file" id="image-upload-success" class="hidden" onchange="previewImage(this, 'display-img-success')" />
+                    <button onclick="document.getElementById('image-upload-success').click()">Update Image</button>
+                    <button id="upload-button-success" class="hidden" onclick="uploadImage('success-story')">Upload</button>
+                {% endif %}
             </div>
+
+            {% if is_staff %}
+                <div class="update-buttons">
+                    <button onclick="editContent('display-title-success', 'editable-title-success', 'update-title-success')">Update Title</button>
+                    <button id="update-title-success" class="hidden" onclick="saveContent('editable-title-success', 'display-title-success', 'success-story', 'title')">Save Title</button>
+                    <button onclick="editContent('display-content-success', 'editable-content-success', 'update-content-success')">Update Content</button>
+                    <button id="update-content-success" class="hidden" onclick="saveContent('editable-content-success', 'display-content-success', 'success-story', 'content')">Save Content</button>
+                </div>
+            {% endif %}
         </div>
     </section>
 
@@ -94,4 +157,68 @@
         </div>
     </section>
 
+    <script>
+
+        function editContent(displayId, editorId, saveButtonId) {
+            document.getElementById(displayId).classList.add('hidden');
+            document.getElementById(editorId).classList.remove('hidden');
+            document.getElementById(saveButtonId).classList.remove('hidden');
+        }
+
+        function saveContent(editorId, displayId, sectionName, contentType) {
+            const newValue = document.getElementById(editorId).value;
+
+            fetch(`/save-content/${sectionName}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    title: contentType === 'title' ? newValue : undefined,
+                    content: contentType === 'content' ? newValue : undefined
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById(displayId).innerText = newValue;
+                    document.getElementById(displayId).classList.remove('hidden');
+                    document.getElementById(editorId).classList.add('hidden');
+                }
+            });
+        }
+
+        function previewImage(input, imgId) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById(imgId).src = e.target.result;
+                }
+                reader.readAsDataURL(input.files[0]);
+                document.getElementById(`upload-button-${imgId.split('-')[2]}`).classList.remove('hidden');
+            }
+        }
+
+        function uploadImage(sectionName) {
+            const imageInput = document.getElementById(`image-upload-${sectionName}`);
+            const formData = new FormData();
+            formData.append('image', imageInput.files[0]);
+
+            fetch(`/upload-image/${sectionName}/`, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById(`upload-button-${sectionName}`).classList.add('hidden');
+                }
+            });
+        }
+
+    </script>
 {% endblock %}

@@ -1,6 +1,12 @@
 {% extends "base/base.html" %}
+{% load static %}
 
 {% block content %}
-    <h1>Ebook Pictures!</h1>
-    <p>This is the Ebook Pictures content.</p>
+    <div class="clearfix">
+        <link rel="stylesheet" href="{% static 'css/blog/blog_styles.css' %}">
+        <section id="main-blog">
+            <h1>Ebook Pictures!</h1>
+            <p>This is the Ebook Pictures content.</p>
+        </section>
+    </div>
 {% endblock %}

@@ -24,7 +24,10 @@ from web_app import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
+
     path('home/', views.home, name='home'),
+    path('upload-image/<str:section_name>/', views.upload_image, name='upload_image'),
+    path('save-content/<str:section_name>/', views.save_content, name='save_content'),
 
     path('blog/', views.blog_home, name='blog'),
     path('blog/<slug:post_slug>/', views.blog_detail, name='blog_detail'),
