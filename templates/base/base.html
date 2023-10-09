@@ -10,6 +10,11 @@
     <link href="https://fonts.googleapis.com/css?family=Lato|Nanum+Gothic:700|Raleway&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css" rel="stylesheet">
 
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'favicon/site.webmanifest' %}">
+
     <link rel="stylesheet" href="{% static '/css/base/base_styles.css' %}">
 
     <title>Blog</title>
@@ -38,30 +43,28 @@
     {% block content %}{% endblock %}
 
     <footer>
-      <div class="row">
-          <div class="col-3" id="newsletter">
-              <div class="social-links social-2">
-                  <a href=""><i class="fab fa-facebook-f"></i></a>
-                  <a href=""><i class="fab fa-twitter"></i></a>
-                  <a href=""><i class="fab fa-linkedin-in"></i></a>
-                  <a href=""><i class="fab fa-instagram"></i></a>
-                  <a href=""><i class="fab fa-tumblr"></i></a>
-                  <a href=""><i class="fab fa-reddit-alien"></i></a>
-              </div>
-          </div>
-          <div class="social-links social-1 col-6">
-              <a href=""><i class="fab fa-facebook-f"></i></a>
-              <a href=""><i class="fab fa-twitter"></i></a>
-              <a href=""><i class="fab fa-linkedin-in"></i></a>
-              <a href=""><i class="fab fa-instagram"></i></a>
-              <a href=""><i class="fab fa-tumblr"></i></a>
-              <a href=""><i class="fab fa-reddit-alien"></i></a>
-          </div>
-      </div>
-      <div id="copyright">
-          &copy; Tu Nguyen Ngoc
-      </div>
-      <a href="#topHeader" id="gotop">Top</a>
+        <div class="row">
+            <div class="col-3" id="newsletter">
+                <div class="social-links social-2">
+                    {% for link in social_links %}
+                        <a href="{{ link.url }}">
+                            <i class="fab fa-{{ link.platform }}"></i>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="social-links social-1 col-6">
+                {% for link in social_links %}
+                    <a href="{{ link.url }}">
+                        <i class="fab fa-{{ link.platform }}"></i>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+        <div id="copyright">
+            &copy; Tu Nguyen Ngoc
+        </div>
+        <a href="#topHeader" id="gotop">Top</a>
     </footer>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

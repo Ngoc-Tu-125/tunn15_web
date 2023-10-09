@@ -191,10 +191,6 @@ main{
     }
 }
 
-img.rounded-corners {
-  border-radius: 25px;
-}
-
 img.featured-image {
   width: 800px;
   height: 508px;
@@ -218,11 +214,6 @@ img.centered-image {
 }
 
 
-.clearfix::after {
-  content: "";
-  display: table;
-  clear: both;
-}
 
 /* Blog detail */
 .title-blog-detail {
@@ -231,6 +222,7 @@ img.centered-image {
   padding-bottom: 10px;
   margin-bottom: 10px;
 }
+
 
 .blog-detail-image-container {
   display: block;

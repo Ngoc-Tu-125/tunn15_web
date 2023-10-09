@@ -10,6 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .forms import CustomUserCreationForm
 from .models import CustomUser, BlogPost
 from .models import HomePageContent
+from .models import SocialLink, PLATFORM_CHOICES
 
 
 ####################################################################################
@@ -25,7 +26,9 @@ def ebook_pictures(request):
         return render(request, 'auth/login_required_prompt.html')
 
 def contacts(request):
-    return render(request, 'contacts/contacts.html')
+    platform_order = {name[0]: index for index, name in enumerate(PLATFORM_CHOICES)}
+    social_links = sorted(SocialLink.objects.all(), key=lambda x: platform_order[x.platform])
+    return render(request, 'contacts/contacts.html', {'social_links': social_links})
 
 
 ####################################################################################
@@ -35,9 +38,22 @@ def home(request):
     is_staff = request.user.is_staff
     intro_content = HomePageContent.objects.get_or_create(section_name='intro', defaults={'title': "Xin chào", 'content': "Rất vui vì mọi người đã ghé thăm trang web nhỏ này."})[0]
     delivery_content = HomePageContent.objects.get_or_create(section_name='delivery', defaults={'title': "Về Bản Thân Mình", 'content': "Vài thông tin nhỏ"})[0]
-    success_story_content = HomePageContent.objects.get_or_create(section_name='success-story', defaults={'title': "Vài chia sẻ nhỏ của mình", 'content': "Vài câu chuyện nhỏ"})[0]
+    success_story_content = HomePageContent.objects.get_or_create(section_name='success', defaults={'title': "Vài chia sẻ nhỏ của mình", 'content': "Vài câu chuyện nhỏ"})[0]
 
-    return render(request, 'home/home.html', {'intro_content': intro_content, 'delivery_content': delivery_content, 'success_story_content': success_story_content, 'is_staff': is_staff})
+    # Process with footer
+    platform_order = {name[0]: index for index, name in enumerate(PLATFORM_CHOICES)}
+    social_links = sorted(SocialLink.objects.all(), key=lambda x: platform_order[x.platform])
+
+    # Full context:
+    context = {
+            'intro_content': intro_content,
+            'delivery_content': delivery_content,
+            'success_story_content': success_story_content,
+            'is_staff': is_staff,
+            'social_links': social_links,
+        }
+
+    return render(request, 'home/home.html', context)
 
 @csrf_exempt
 def upload_image(request, section_name):
@@ -161,5 +177,8 @@ def blog_detail(request, post_slug):
     # Fetch the blog post based on the provided slug
     post = get_object_or_404(BlogPost, slug=post_slug)
 
+    # Fetch the three latest posts for the sidebar
+    lastest_posts = BlogPost.objects.all().order_by('-date_published')[:3]
+
     # Render the detailed view template
-    return render(request, 'blog/blog_detail_template.html', {'post': post})
+    return render(request, 'blog/blog_detail_template.html', {'post': post, 'lastest_posts': lastest_posts})

@@ -5,12 +5,38 @@
     <div class="clearfix">
         <link rel="stylesheet" href="{% static 'css/blog/blog_styles.css' %}">
         <section id="main-blog">
-            <h1 class="title-blog-detail">{{ post.title }}</h1>
-            <div class="blog-detail-image-container">
-                <img class="rounded-corners blog-detail-image" src="{{ post.image.url }}" alt="{{ post.title }}">
+            <div class="container container-flex">
+                <main role="main">
+                    <article class="article-featured">
+                        <h1 class="title-blog-detail">{{ post.title }}</h1>
+                        <p>Published on: {{ post.date_published }}</p>
+                        <div>{{ post.full_content|safe }}</div>
+                    </article>
+                </main>
+
+
+                <aside class="sidebar">
+                    <div class="sidebar-widget">
+                        <h2 class="widget-title">ABOUT ME</h2>
+                        <img class="rounded-corners-25px" src="https://raw.githubusercontent.com/kevin-powell/reponsive-web-design-bootcamp/master/Module%202-%20A%20simple%20life/img/about-me.jpg" alt="john doe" class="widget-image">
+                        <p class="widget-body">I find life better, and I'm happier, when things are nice and simple.</p>
+                    </div>
+
+                    <div class="sidebar-widget">
+                        <h2 class="widget-title">LASTEST POSTS</h2>
+                        {% for post in lastest_posts %}
+                            <div class="widget-lastest-post">
+                                <!-- Wrap the title with an anchor tag pointing to the post detail page -->
+                                <h3 class="widget-lastest-post-title">
+                                    <a href="{% url 'blog_detail' post.slug %}">{{ post.title }}</a>
+                                </h3>
+                                <img class="rounded-corners-25px widget-image" src="{{ post.image.url }}" alt="{{ post.title }}">
+                            </div>
+                        {% endfor %}
+                    </div>
+                </aside>
+
             </div>
-            <p>Published on: {{ post.date_published }}</p>
-            <div>{{ post.full_content|safe }}</div>
         </section>
     </div>
 {% endblock %}

@@ -21,9 +21,9 @@
         </div>
         <div id="development-img">
             {% if intro_content.image %}
-                <img src="{{ intro_content.image.url }}" alt="Image Description" title="Description" />
+                <img id="display-img-intro" class="rounded-corners-35px" src="{{ intro_content.image.url }}" alt="Image Description" title="Description" />
             {% else %}
-                <img src="https://www.dropbox.com/s/7hwnjccu15vt90e/mobileDevlopment.svg?raw=1" alt="Image Description" title="Description" />
+                <img id="display-img-intro" src="https://www.dropbox.com/s/7hwnjccu15vt90e/mobileDevlopment.svg?raw=1" alt="Image Description" title="Description" />
             {% endif %}
             {% if is_staff %}
                 <input type="file" id="image-upload-intro" class="hidden" onchange="previewImage(this, 'display-img-intro')" />
@@ -47,9 +47,9 @@
 
         <div class="col-5 delivery-img">
             {% if delivery_content.image %}
-                <img src="{{ delivery_content.image.url }}" alt="Image Description" title="Description"/>
+                <img id="display-img-delivery" class="rounded-corners-35px" src="{{ delivery_content.image.url }}" alt="Image Description" title="Description"/>
             {% else %}
-                <img src="https://www.dropbox.com/s/ipx91osglyczpdt/delivery_experience.svg?raw=1" alt="Image Description" title="Description"/>
+                <img id="display-img-delivery" src="https://www.dropbox.com/s/ipx91osglyczpdt/delivery_experience.svg?raw=1" alt="Image Description" title="Description"/>
             {% endif %}
 
             {% if is_staff %}
@@ -60,16 +60,19 @@
             {% endif %}
         </div>
         <div class="col-7">
-            {% comment %} <h2 id="display-title-delivery">{{ delivery_content.title }}</h2>
-            <textarea id="editable-title-delivery" class="hidden"></textarea> {% endcomment %}
 
             <p id="display-content-delivery">{{ delivery_content.content }}</p>
             <textarea id="editable-content-delivery" class="hidden"></textarea>
 
             <div class="btn-footer">
-                <a href="#success-story" class="brand-btn">Vài câu chuyện nhỏ</a>
+                <a href="#success" class="brand-btn">Vài câu chuyện nhỏ</a>
             </div>
 
+        </div>
+
+    </section>
+    <section id="delivery">
+        <div class="col-7">
             {% if is_staff %}
                 <div class="update-buttons">
                     <button onclick="editContent('display-title-delivery', 'editable-title-delivery', 'update-title-delivery')">Update Title</button>
@@ -81,7 +84,7 @@
         </div>
     </section>
 
-    <section id="success-story">
+    <section id="success">
         <h1 id="display-title-success" class="sec-heading">{{ success_story_content.title }}</h1>
         <textarea id="editable-title-success" class="hidden"></textarea>
 
@@ -96,25 +99,42 @@
             </div>
             <div class="col-6 slide-img">
                 {% if success_story_content.image %}
-                    <img id="display-img-success" src="{{ success_story_content.image.url }}" alt="Image Description" title="Description"/>
+                    <img id="display-img-success" class="rounded-corners-35px" src="{{ success_story_content.image.url }}" alt="Image Description" title="Description"/>
                 {% else %}
-                    <img src="https://www.dropbox.com/s/ipx91osglyczpdt/delivery_experience.svg?raw=1" alt="Image Description" title="Description"/>
+                    <img id="display-img-success" src="https://www.dropbox.com/s/ipx91osglyczpdt/delivery_experience.svg?raw=1" alt="Image Description" title="Description"/>
                 {% endif %}
 
                 {% if is_staff %}
                     <input type="file" id="image-upload-success" class="hidden" onchange="previewImage(this, 'display-img-success')" />
                     <button onclick="document.getElementById('image-upload-success').click()">Update Image</button>
-                    <button id="upload-button-success" class="hidden" onclick="uploadImage('success-story')">Upload</button>
+                    <button id="upload-button-success" class="hidden" onclick="uploadImage('success')">Upload</button>
+
+                {% endif %}
+
+            </div>
+
+            <div class="col-6 slide-img">
+                {% if is_staff %}
+                <div class="update-buttons">
+                    <button onclick="editContent('display-title-success', 'editable-title-success', 'update-title-success')">Update Title</button>
+                    <button id="update-title-success" class="hidden" onclick="saveContent('editable-title-success', 'display-title-success', 'success', 'title')">Save Title</button>
+                    <button onclick="editContent('display-content-success', 'editable-content-success', 'update-content-success')">Update Content</button>
+                    <button id="update-content-success" class="hidden" onclick="saveContent('editable-content-success', 'display-content-success', 'success', 'content')">Save Content</button>
+                </div>
                 {% endif %}
             </div>
 
+        </div>
+    </section>
+    <section id="success">
+        <div class="col-6 slide-img">
             {% if is_staff %}
-                <div class="update-buttons">
-                    <button onclick="editContent('display-title-success', 'editable-title-success', 'update-title-success')">Update Title</button>
-                    <button id="update-title-success" class="hidden" onclick="saveContent('editable-title-success', 'display-title-success', 'success-story', 'title')">Save Title</button>
-                    <button onclick="editContent('display-content-success', 'editable-content-success', 'update-content-success')">Update Content</button>
-                    <button id="update-content-success" class="hidden" onclick="saveContent('editable-content-success', 'display-content-success', 'success-story', 'content')">Save Content</button>
-                </div>
+            <div class="update-buttons">
+                <button onclick="editContent('display-title-success', 'editable-title-success', 'update-title-success')">Update Title</button>
+                <button id="update-title-success" class="hidden" onclick="saveContent('editable-title-success', 'display-title-success', 'success', 'title')">Save Title</button>
+                <button onclick="editContent('display-content-success', 'editable-content-success', 'update-content-success')">Update Content</button>
+                <button id="update-content-success" class="hidden" onclick="saveContent('editable-content-success', 'display-content-success', 'success', 'content')">Save Content</button>
+            </div>
             {% endif %}
         </div>
     </section>

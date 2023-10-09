@@ -2,13 +2,19 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
 from .forms import CustomUserCreationForm, CustomUserChangeForm
-from .models import CustomUser, BlogPost
+from .models import CustomUser, BlogPost, SocialLink
+from .models import SocialLink
+
+
+admin.site.register(SocialLink)
 
 
 @admin.register(BlogPost)
 class BlogPostAdmin(admin.ModelAdmin):
     list_display = ('title', 'date_published',)  # Customize the fields you want to display in the list view
     search_fields = ('title',)  # Allow searching by title
+    prepopulated_fields = {'slug': ('title',)}
+
 
 class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm

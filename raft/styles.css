@@ -266,7 +266,7 @@ nav {
     padding-top: 60px
 }
 
-#success-story {
+#success {
     background-color: #f6f6f6;
 }
 
@@ -911,7 +911,7 @@ footer {
         height: 210px;
     }
 
-    #highlights, #success-story {
+    #highlights, #success {
         display: inline-block;
     }
 
@@ -983,7 +983,7 @@ footer {
         padding-top: 40px;
     }
 
-    #success-story, #highlights {
+    #success, #highlights {
         display: inline-block;
     }
 
@@ -1077,7 +1077,7 @@ footer {
         width: 32.5%;
     }
 
-    #success-story {
+    #success {
         background-color: #f6f6f6;
         display: inline-block;
     }
@@ -1196,7 +1196,7 @@ footer {
         display: block;
     }
 
-    #success-story .slider {
+    #success .slider {
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
