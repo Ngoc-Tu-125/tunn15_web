@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login as auth_login, authenticate
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import messages
 from django.http import JsonResponse
@@ -12,23 +13,46 @@ from .models import CustomUser, BlogPost
 from .models import HomePageContent
 from .models import SocialLink, PLATFORM_CHOICES
 
+####################################################################################
+# GENERAL FUNCTIONS
+####################################################################################
+def get_social_links():
+     # Process with footer
+    platform_order = {name[0]: index for index, name in enumerate(PLATFORM_CHOICES)}
+    social_links = sorted(SocialLink.objects.all(), key=lambda x: platform_order[x.platform])
+
+    return social_links
 
 ####################################################################################
 # MAIN VIEWS
 ####################################################################################
 def tech_blog(request):
-    return render(request, 'tech_blog/main_tech_blog.html')
+    # Context data
+    context = {
+        'social_links': get_social_links(),
+    }
+    return render(request, 'tech_blog/main_tech_blog.html', context)
 
 def ebook_pictures(request):
+    # Context data
+    context = {
+        'social_links': get_social_links(),
+    }
     if request.user.is_authenticated:
-        return render(request, 'ebook_pictures/ebook_pictures.html')
+        return render(request, 'ebook_pictures/ebook_pictures.html', context)
     else:
-        return render(request, 'auth/login_required_prompt.html')
+        return render(request, 'auth/login_required_prompt.html', context)
 
 def contacts(request):
-    platform_order = {name[0]: index for index, name in enumerate(PLATFORM_CHOICES)}
-    social_links = sorted(SocialLink.objects.all(), key=lambda x: platform_order[x.platform])
-    return render(request, 'contacts/contacts.html', {'social_links': social_links})
+    # Context data
+    context = {
+        'social_links': get_social_links(),
+    }
+    return render(request, 'contacts/contacts.html', context)
+
+@user_passes_test(lambda u: u.is_superuser)
+def custom_admin(request):
+    return render(request, 'custom_admin/custom_admin.html')
 
 
 ####################################################################################
@@ -40,17 +64,14 @@ def home(request):
     delivery_content = HomePageContent.objects.get_or_create(section_name='delivery', defaults={'title': "Về Bản Thân Mình", 'content': "Vài thông tin nhỏ"})[0]
     success_story_content = HomePageContent.objects.get_or_create(section_name='success', defaults={'title': "Vài chia sẻ nhỏ của mình", 'content': "Vài câu chuyện nhỏ"})[0]
 
-    # Process with footer
-    platform_order = {name[0]: index for index, name in enumerate(PLATFORM_CHOICES)}
-    social_links = sorted(SocialLink.objects.all(), key=lambda x: platform_order[x.platform])
-
     # Full context:
+    # Context data
     context = {
             'intro_content': intro_content,
             'delivery_content': delivery_content,
             'success_story_content': success_story_content,
             'is_staff': is_staff,
-            'social_links': social_links,
+            'social_links': get_social_links(),
         }
 
     return render(request, 'home/home.html', context)
@@ -169,8 +190,15 @@ def blog_home(request):
     # Fetch the three latest posts for the sidebar
     lastest_posts = BlogPost.objects.all().order_by('-date_published')[:3]
 
+
+    # Context data
+    context = {
+        'articles': articles,
+        'lastest_posts': lastest_posts,
+        'social_links': get_social_links(),
+    }
     # Render the blog page with the fetched articles and lastest_posts
-    return render(request, 'blog/main_blog.html', {'articles': articles, 'lastest_posts': lastest_posts})
+    return render(request, 'blog/main_blog.html', context)
 
 
 def blog_detail(request, post_slug):
@@ -180,5 +208,13 @@ def blog_detail(request, post_slug):
     # Fetch the three latest posts for the sidebar
     lastest_posts = BlogPost.objects.all().order_by('-date_published')[:3]
 
+
+    # Context data
+    context = {
+        'post': post,
+        'lastest_posts': lastest_posts,
+        'social_links': get_social_links(),
+    }
+
     # Render the detailed view template
-    return render(request, 'blog/blog_detail_template.html', {'post': post, 'lastest_posts': lastest_posts})
+    return render(request, 'blog/blog_detail_template.html', context)

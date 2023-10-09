@@ -34,8 +34,13 @@ urlpatterns = [
     path('ckeditor/', include('ckeditor_uploader.urls')),
 
     path('tech_blog/', views.tech_blog, name='tech_blog'),
+
     path('ebook_pictures/', views.ebook_pictures, name='ebook_pictures'),
+
     path('contacts/', views.contacts, name='contacts'),
+
+    path('custom-admin/', views.custom_admin, name='custom_admin'),
+
     path('signup/', views.signup, name='signup'),
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),
