@@ -28,7 +28,7 @@
                             <div class="widget-lastest-post">
                                 <!-- Wrap the title with an anchor tag pointing to the post detail page -->
                                 <h3 class="widget-lastest-post-title">
-                                    <a href="{% url 'blog_detail' post.slug %}">{{ post.title }}</a>
+                                    <a href="{% url 'tech_blog_detail' post.slug %}">{{ post.title }}</a>
                                 </h3>
                                 <img class="rounded-corners-25px widget-image" src="{{ post.image.url }}" alt="{{ post.title }}">
                             </div>

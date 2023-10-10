@@ -46,4 +46,6 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),
     path('check_email/', views.check_email_exists, name='check_email_exists'),
+
+    path('filter_tech_blog_posts/', views.filter_tech_blog_posts, name='filter_tech_blog_posts'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

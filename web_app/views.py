@@ -1,4 +1,5 @@
 import json
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login as auth_login, authenticate
 from django.contrib.auth import logout as auth_logout
@@ -11,7 +12,27 @@ from django.views.decorators.csrf import csrf_exempt
 from .forms import CustomUserCreationForm
 from .models import CustomUser, BlogPost, TechBlogPost
 from .models import HomePageContent
-from .models import SocialLink, PLATFORM_CHOICES
+from .models import SocialLink, PLATFORM_CHOICES, TECHBLOG_TYPE_CHOICES
+
+
+from django.conf import settings
+
+def filter_tech_blog_posts(request):
+    tech_type = request.GET.get('techType')
+
+    # Query the TechBlogPost model to get the filtered posts
+    posts = TechBlogPost.objects.filter(tech_type=tech_type)
+
+    # Convert the QuerySet to a list of dictionaries with full image URLs
+    posts_list = [{
+        'title': post.title,
+        'image_url': settings.MEDIA_URL + str(post.image) if post.image else None,
+        'slug': post.slug,
+        'date_published': post.date_published,
+        'body_snippet': post.body_snippet
+    } for post in posts]
+
+    return JsonResponse(posts_list, safe=False)
 
 ####################################################################################
 # GENERAL FUNCTIONS
@@ -259,6 +280,7 @@ def tech_blog_home(request):
         'latest_tech_posts': latest_tech_posts,
         'social_links': get_social_links(),
         'about_content': about_content,
+        'tech_blog_types': TECHBLOG_TYPE_CHOICES,
         'is_staff': is_staff,
     }
     # Render the tech blog page with the fetched tech articles and latest_tech_posts

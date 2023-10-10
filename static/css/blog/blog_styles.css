@@ -294,3 +294,17 @@ img.blog-detail-image {
 .step-links a:first-child:hover {
   background-color: #143774;
 }
+
+
+/* Tech blog css */
+.techblog-type {
+  cursor: pointer; /* Makes the mouse cursor appear as a hand, indicating something is clickable */
+  text-decoration: none; /* Ensures that there's no underline by default */
+  color: inherit; /* Uses the default text color */
+  transition: color 0.3s ease, text-decoration 0.3s ease; /* Smoothens the color and underline change */
+}
+
+.techblog-type:hover {
+  color: blue; /* Changes the text color to blue on hover */
+  text-decoration: underline; /* Adds an underline on hover */
+}
