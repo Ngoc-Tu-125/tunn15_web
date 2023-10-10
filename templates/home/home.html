@@ -5,7 +5,7 @@
 {% block content %}
 </header>
     <link rel='stylesheet' href="{% static 'css/home/home_styles.css' %}">
-    <section id="intro">
+    <section id="intro" data-section="intro">
         <div id="intro-info">
             <div>
                 <h1 id="display-title-intro">{{ intro_content.title }}</h1>
@@ -28,7 +28,7 @@
             {% if is_staff %}
                 <input type="file" id="image-upload-intro" class="hidden" onchange="previewImage(this, 'display-img-intro')" />
                 <button onclick="document.getElementById('image-upload-intro').click()">Update Image</button>
-                <button id="upload-button-intro" class="hidden" onclick="uploadImage('intro')">Upload</button>
+                <button id="upload-button-intro" class="hidden" onclick="uploadImage('image-upload-intro', 'display-img-intro')">Upload</button>
             {% endif %}
         </div>
         {% if is_staff %}
@@ -41,7 +41,7 @@
         {% endif %}
     </section>
 
-    <section id="delivery">
+    <section id="delivery" data-section="delivery">
         <h1 id="display-title-delivery" class="sec-heading">{{ delivery_content.title }}</h1>
         <textarea id="editable-title-delivery" class="hidden"></textarea>
 
@@ -55,7 +55,7 @@
             {% if is_staff %}
                 <input type="file" id="image-upload-delivery" class="hidden" onchange="previewImage(this, 'display-img-delivery')" />
                 <button onclick="document.getElementById('image-upload-delivery').click()">Update Image</button>
-                <button id="upload-button-delivery" class="hidden" onclick="uploadImage('delivery')">Upload</button>
+                <button id="upload-button-delivery" class="hidden" onclick="uploadImage('image-upload-deliver', 'display-img-delivery')">Upload</button>
 
             {% endif %}
         </div>
@@ -71,7 +71,7 @@
         </div>
 
     </section>
-    <section id="delivery">
+    <section id="delivery" data-section="delivery">
         <div class="col-7">
             {% if is_staff %}
                 <div class="update-buttons">
@@ -84,7 +84,7 @@
         </div>
     </section>
 
-    <section id="success">
+    <section id="success" data-section="success">
         <h1 id="display-title-success" class="sec-heading">{{ success_story_content.title }}</h1>
         <textarea id="editable-title-success" class="hidden"></textarea>
 
@@ -107,7 +107,7 @@
                 {% if is_staff %}
                     <input type="file" id="image-upload-success" class="hidden" onchange="previewImage(this, 'display-img-success')" />
                     <button onclick="document.getElementById('image-upload-success').click()">Update Image</button>
-                    <button id="upload-button-success" class="hidden" onclick="uploadImage('success')">Upload</button>
+                    <button id="upload-button-success" class="hidden" onclick="uploadImage('image-upload-success', 'display-img-success')">Upload</button>
 
                 {% endif %}
 
@@ -115,7 +115,7 @@
 
         </div>
     </section>
-    <section id="success">
+    <section id="success" data-section="success">
         <div class="col-6 slide-img">
             {% if is_staff %}
             <div class="update-buttons">
@@ -166,68 +166,5 @@
         </div>
     </section>
 
-    <script>
-
-        function editContent(displayId, editorId, saveButtonId) {
-            document.getElementById(displayId).classList.add('hidden');
-            document.getElementById(editorId).classList.remove('hidden');
-            document.getElementById(saveButtonId).classList.remove('hidden');
-        }
-
-        function saveContent(editorId, displayId, sectionName, contentType) {
-            const newValue = document.getElementById(editorId).value;
-
-            fetch(`/save-content/${sectionName}/`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': '{{ csrf_token }}',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    title: contentType === 'title' ? newValue : undefined,
-                    content: contentType === 'content' ? newValue : undefined
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    document.getElementById(displayId).innerText = newValue;
-                    document.getElementById(displayId).classList.remove('hidden');
-                    document.getElementById(editorId).classList.add('hidden');
-                }
-            });
-        }
-
-        function previewImage(input, imgId) {
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById(imgId).src = e.target.result;
-                }
-                reader.readAsDataURL(input.files[0]);
-                document.getElementById(`upload-button-${imgId.split('-')[2]}`).classList.remove('hidden');
-            }
-        }
-
-        function uploadImage(sectionName) {
-            const imageInput = document.getElementById(`image-upload-${sectionName}`);
-            const formData = new FormData();
-            formData.append('image', imageInput.files[0]);
-
-            fetch(`/upload-image/${sectionName}/`, {
-                method: 'POST',
-                body: formData,
-                headers: {
-                    'X-CSRFToken': '{{ csrf_token }}'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    document.getElementById(`upload-button-${sectionName}`).classList.add('hidden');
-                }
-            });
-        }
-
-    </script>
+    <script src="{% static 'js/base/edit_content.js' %}"></script>
 {% endblock %}

@@ -25,6 +25,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
 
+    path('custom-admin/', views.custom_admin, name='custom_admin'),
+
     path('home/', views.home, name='home'),
     path('upload-image/<str:section_name>/', views.upload_image, name='upload_image'),
     path('save-content/<str:section_name>/', views.save_content, name='save_content'),
@@ -39,8 +41,6 @@ urlpatterns = [
     path('ebook_pictures/', views.ebook_pictures, name='ebook_pictures'),
 
     path('contacts/', views.contacts, name='contacts'),
-
-    path('custom-admin/', views.custom_admin, name='custom_admin'),
 
     path('signup/', views.signup, name='signup'),
     path('login/', views.login, name='login'),

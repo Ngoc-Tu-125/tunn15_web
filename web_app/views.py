@@ -26,13 +26,6 @@ def get_social_links():
 ####################################################################################
 # MAIN VIEWS
 ####################################################################################
-def tech_blog(request):
-    # Context data
-    context = {
-        'social_links': get_social_links(),
-    }
-    return render(request, 'tech_blog/main_tech_blog.html', context)
-
 def ebook_pictures(request):
     # Context data
     context = {
@@ -49,10 +42,6 @@ def contacts(request):
         'social_links': get_social_links(),
     }
     return render(request, 'contacts/contacts.html', context)
-
-@user_passes_test(lambda u: u.is_superuser)
-def custom_admin(request):
-    return render(request, 'custom_admin/custom_admin.html')
 
 
 ####################################################################################
@@ -166,6 +155,13 @@ def logout(request):
 # BLOG PAGE
 ####################################################################################
 def blog_home(request):
+    # Get edit info
+    is_staff = request.user.is_staff
+    about_content = HomePageContent.objects.get_or_create(
+        section_name='about',
+        defaults={'title': "VỀ MÌNH", 'content': "I find life better, and I'm happier, when things are nice and simple."}
+    )[0]
+
     articles_list = BlogPost.objects.all().order_by('-date_published')
     paginator = Paginator(articles_list, 3)  # Show 10 articles per page
 
@@ -196,6 +192,8 @@ def blog_home(request):
         'articles': articles,
         'lastest_posts': lastest_posts,
         'social_links': get_social_links(),
+        'about_content': about_content,
+        'is_staff': is_staff,
     }
     # Render the blog page with the fetched articles and lastest_posts
     return render(request, 'blog/main_blog.html', context)
@@ -224,6 +222,14 @@ def blog_detail(request, post_slug):
 # TECH BLOG PAGE
 ####################################################################################
 def tech_blog_home(request):
+    # Get edit info
+    is_staff = request.user.is_staff
+    about_content = HomePageContent.objects.get_or_create(
+        section_name='about_me',
+        defaults={'title': "VỀ MÌNH", 'content': "I find life better, and I'm happier, when things are nice and simple."}
+    )[0]
+
+    # Get technical articles list
     tech_articles_list = TechBlogPost.objects.all().order_by('-date_published')
     paginator = Paginator(tech_articles_list, 3)  # Show 3 tech articles per page
 
@@ -252,6 +258,8 @@ def tech_blog_home(request):
         'tech_articles': tech_articles,
         'latest_tech_posts': latest_tech_posts,
         'social_links': get_social_links(),
+        'about_content': about_content,
+        'is_staff': is_staff,
     }
     # Render the tech blog page with the fetched tech articles and latest_tech_posts
     return render(request, 'tech_blog/main_tech_blog.html', context)
@@ -273,3 +281,11 @@ def tech_blog_detail(request, post_slug):
 
     # Render the detailed tech blog view template
     return render(request, 'tech_blog/tech_blog_detail_template.html', context)
+
+
+####################################################################################
+# CUSTOM ADMIN PAGE
+####################################################################################
+@user_passes_test(lambda u: u.is_superuser)
+def custom_admin(request):
+    return render(request, 'custom_admin/custom_admin.html')
