@@ -15,7 +15,7 @@
                             <img class="rounded-corners-25px featured-image" src="{{ article.image.url }}" alt="{{ article.title }}">
                             <p class="article-info">{{ article.date_published }}</p>
                             <p class="article-body">{{ article.body_snippet }}</p>
-                            <a href="{% url 'blog_detail' article.slug %}" class="article-read-more">CONTINUE READING</a>
+                            <a href="{% url 'blog_detail' article.slug %}" class="article-read-more">Đọc thêm . . .</a>
                         </article>
 
                     {% else %}
@@ -23,7 +23,7 @@
                             <div class="article-recent-main">
                                 <h2 class="article-title">{{ article.title }}</h2>
                                 <p class="article-body">{{ article.body_snippet }}</p>
-                                <a href="{% url 'blog_detail' article.slug %}" class="article-read-more">CONTINUE READING</a>
+                                <a href="{% url 'blog_detail' article.slug %}" class="article-read-more">Đọc thêm . . .</a>
                             </div>
                             <div class="article-recent-secondary">
                                 <img class="rounded-corners-25px" src="{{ article.image.url }}" alt="{{ article.title }}">
@@ -38,13 +38,13 @@
 
             <aside class="sidebar">
                 <div class="sidebar-widget">
-                    <h2 class="widget-title">ABOUT ME</h2>
+                    <h2 class="widget-title">VỀ MÌNH</h2>
                     <img class="rounded-corners-25px" src="https://raw.githubusercontent.com/kevin-powell/reponsive-web-design-bootcamp/master/Module%202-%20A%20simple%20life/img/about-me.jpg" alt="john doe" class="widget-image">
                     <p class="widget-body">I find life better, and I'm happier, when things are nice and simple.</p>
                 </div>
 
                 <div class="sidebar-widget">
-                    <h2 class="widget-title">LASTEST POSTS</h2>
+                    <h2 class="widget-title">BÀI VIẾT MỚI</h2>
                     {% for post in lastest_posts %}
                         <div class="widget-lastest-post">
                             <!-- Wrap the title with an anchor tag pointing to the post detail page -->
@@ -59,25 +59,27 @@
 
         </div>
 
-        <div class="container container-flex">
-            <div class="pagination">
-                <span class="step-links">
-                    {% if articles.has_previous %}
-                        <a href="?page=1">&laquo; first</a>
-                        <a href="?page={{ articles.previous_page_number }}">previous</a>
-                    {% endif %}
+        {% if articles.paginator.num_pages > 1 %}
+            <div class="container container-flex">
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if articles.has_previous %}
+                            <a href="?page=1">&laquo; first</a>
+                            <a href="?page={{ articles.previous_page_number }}">previous</a>
+                        {% endif %}
 
-                    <span class="current">
-                        Page {{ articles.number }} of {{ articles.paginator.num_pages }}.
+                        <span class="current">
+                            Page {{ articles.number }} of {{ articles.paginator.num_pages }}.
+                        </span>
+
+                        {% if articles.has_next %}
+                            <a href="?page={{ articles.next_page_number }}">Next</a>
+                            <a href="?page={{ articles.paginator.num_pages }}">Last &raquo;</a>
+                        {% endif %}
                     </span>
-
-                    {% if articles.has_next %}
-                        <a href="?page={{ articles.next_page_number }}">Next</a>
-                        <a href="?page={{ articles.paginator.num_pages }}">Last &raquo;</a>
-                    {% endif %}
-                </span>
+                </div>
             </div>
-        </div>
+        {% endif %}
 
     </section>
 {% endblock %}

@@ -33,7 +33,8 @@ urlpatterns = [
     path('blog/<slug:post_slug>/', views.blog_detail, name='blog_detail'),
     path('ckeditor/', include('ckeditor_uploader.urls')),
 
-    path('tech_blog/', views.tech_blog, name='tech_blog'),
+    path('tech_blog/', views.tech_blog_home, name='tech_blog'),
+    path('tech_blog/<slug:post_slug>/', views.tech_blog_detail, name='tech_blog_detail'),
 
     path('ebook_pictures/', views.ebook_pictures, name='ebook_pictures'),
 

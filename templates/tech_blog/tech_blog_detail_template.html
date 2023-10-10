@@ -8,9 +8,9 @@
             <div class="container container-flex">
                 <main role="main">
                     <article class="article-featured">
-                        <h1 class="title-blog-detail">{{ post.title }}</h1>
-                        <p>Published on: {{ post.date_published }}</p>
-                        <div>{{ post.full_content|safe }}</div>
+                        <h1 class="title-blog-detail">{{ tech_post.title }}</h1>
+                        <p>Published on: {{ tech_post.date_published }}</p>
+                        <div>{{ tech_post.full_content|safe }}</div>
                     </article>
                 </main>
 
@@ -24,7 +24,7 @@
 
                     <div class="sidebar-widget">
                         <h2 class="widget-title">BÀI VIẾT MỚI</h2>
-                        {% for post in lastest_posts %}
+                        {% for post in latest_tech_posts %}
                             <div class="widget-lastest-post">
                                 <!-- Wrap the title with an anchor tag pointing to the post detail page -->
                                 <h3 class="widget-lastest-post-title">

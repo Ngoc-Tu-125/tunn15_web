@@ -4,10 +4,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 from ckeditor_uploader.fields import RichTextUploadingField
-
-from django.db.models.signals import pre_save
-from django.utils.text import slugify
-from django.utils.crypto import get_random_string
+from django.utils import timezone
 
 from .managers import CustomUserManager
 
@@ -56,6 +53,30 @@ class BlogPost(models.Model):
 
     def __str__(self):
         return self.title
+
+
+####################################################################################
+# TECH BLOG POST MODELS
+####################################################################################
+TECHBLOG_TYPE_CHOICES = (
+    ('python', 'Python'),
+    ('cpp', 'C++'),
+    ('test', 'Test'),
+    ('other', 'Other')
+)
+
+class TechBlogPost(models.Model):
+    title = models.CharField(max_length=255)
+    image = models.ImageField(upload_to='techblog_images/', null=True, blank=True, help_text="Upload an image for the tech blog post.")
+    date_published = models.DateField(default=timezone.now)
+    body_snippet = models.TextField(default="Tech Blog")
+    full_content = RichTextUploadingField(default="Tech Blog full content")
+    slug = models.SlugField(unique=True)
+    tech_type = models.CharField(max_length=50, choices=TECHBLOG_TYPE_CHOICES, help_text="Type of the technical blog post.")
+
+    def __str__(self):
+        return self.title
+
 
 
 ####################################################################################

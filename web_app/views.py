@@ -9,7 +9,7 @@ from django.contrib import messages
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .forms import CustomUserCreationForm
-from .models import CustomUser, BlogPost
+from .models import CustomUser, BlogPost, TechBlogPost
 from .models import HomePageContent
 from .models import SocialLink, PLATFORM_CHOICES
 
@@ -218,3 +218,58 @@ def blog_detail(request, post_slug):
 
     # Render the detailed view template
     return render(request, 'blog/blog_detail_template.html', context)
+
+
+####################################################################################
+# TECH BLOG PAGE
+####################################################################################
+def tech_blog_home(request):
+    tech_articles_list = TechBlogPost.objects.all().order_by('-date_published')
+    paginator = Paginator(tech_articles_list, 3)  # Show 3 tech articles per page
+
+    page = request.GET.get('page')
+    try:
+        tech_articles = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver the first page.
+        tech_articles = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range, deliver the last page of results.
+        tech_articles = paginator.page(paginator.num_pages)
+
+    if tech_articles:
+        # Add a class attribute for the template to the latest tech article
+        tech_articles[0].class_name = "article-featured"
+        # For the rest of the tech articles, assign the class 'article-recent'
+        for article in tech_articles[1:]:
+            article.class_name = "article-recent"
+
+    # Fetch the three latest tech posts for the sidebar
+    latest_tech_posts = TechBlogPost.objects.all().order_by('-date_published')[:3]
+
+    # Context data
+    context = {
+        'tech_articles': tech_articles,
+        'latest_tech_posts': latest_tech_posts,
+        'social_links': get_social_links(),
+    }
+    # Render the tech blog page with the fetched tech articles and latest_tech_posts
+    return render(request, 'tech_blog/main_tech_blog.html', context)
+
+
+def tech_blog_detail(request, post_slug):
+    # Fetch the tech blog post based on the provided slug
+    tech_post = get_object_or_404(TechBlogPost, slug=post_slug)
+
+    # Fetch the three latest tech posts for the sidebar
+    latest_tech_posts = TechBlogPost.objects.all().order_by('-date_published')[:3]
+
+    # Context data
+    context = {
+        'tech_post': tech_post,
+        'latest_tech_posts': latest_tech_posts,
+        'social_links': get_social_links(),
+    }
+
+    # Render the detailed tech blog view template
+    return render(request, 'tech_blog/tech_blog_detail_template.html', context)
