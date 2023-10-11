@@ -139,7 +139,6 @@ html {
   }
 
   #intro {
-    padding-top: 3em;
     position: relative;
   }
 
@@ -493,12 +492,14 @@ html {
             border-radius: 20px;
             padding: 6px;
 
+
             -webkit-transition:all .2s ease-in;
             transition:all .2s ease-in;
         }
 
         .social-links a:not(:last-child) {
             margin-right: 10px;
+            /* text-decoration: none; */
         }
 
         .social-links a:hover, .social-links a:focus {
@@ -665,7 +666,7 @@ html {
 
     #topHeader {
         position: relative;
-        padding-bottom: 0;
+        padding-bottom: 3em;
     }
 
         #topHeader .logo {
@@ -1299,6 +1300,14 @@ html {
         height: 180px;
     }
   }
+
+  /* Header place holder */
+  #header-placeholder {
+    display: block;
+    width: 100%;
+    height: 2.5em; /* default height when not active */
+}
+
 
   /* Image rounded corners 25px */
   img.rounded-corners-25px {

@@ -8,7 +8,6 @@
 
 .intro-text {
   text-align: center;
-  margin-top: 50px;
   margin-bottom: 20px;
 }
 
@@ -17,7 +16,7 @@
   color: #4d4d4b;
   justify-content: center;  /* Aligns content horizontally to the center */
   align-items: center;      /* Aligns content vertically to the center */
-  height: 100px;            /* Adjust this value based on your design preference */
+  height: 1.5em;            /* Adjust this value based on your design preference */
   width: 100%;
   font-size: 1.6em;
   text-align: center;

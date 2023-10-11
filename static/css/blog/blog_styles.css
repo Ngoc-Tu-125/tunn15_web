@@ -8,7 +8,6 @@ body {
 }
 #main-blog {
     flex: 1;
-    padding-top: 3em;
     margin-bottom: 50px;
     position: relative;
 }
@@ -307,4 +306,9 @@ img.blog-detail-image {
 .techblog-type:hover {
   color: blue; /* Changes the text color to blue on hover */
   text-decoration: underline; /* Adds an underline on hover */
+}
+
+.techblog-type-icon {
+  width: 20px; /* Set the width to match the font size */
+  height: 20px; /* Set the height to match the font size */
 }
