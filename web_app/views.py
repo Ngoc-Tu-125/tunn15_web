@@ -274,13 +274,21 @@ def tech_blog_home(request):
     # Fetch the three latest tech posts for the sidebar
     latest_tech_posts = TechBlogPost.objects.all().order_by('-date_published')[:3]
 
+    # Get tech blog type
+    tech_blog_types = [
+        {"type": "python", "display_name": "Python", "icon": "fab fa-python"},
+        {"type": "cpp", "display_name": "C/C++", "icon": "fab fa-cuttlefish"},
+        {"type": "test", "display_name": "Test", "icon": "fas fa-file-code"},
+        {"type": "other", "display_name": "Other", "icon": "fas fa-laptop-code"},
+    ]
+
     # Context data
     context = {
         'tech_articles': tech_articles,
         'latest_tech_posts': latest_tech_posts,
         'social_links': get_social_links(),
         'about_content': about_content,
-        'tech_blog_types': TECHBLOG_TYPE_CHOICES,
+        'tech_blog_types': tech_blog_types,
         'is_staff': is_staff,
     }
     # Render the tech blog page with the fetched tech articles and latest_tech_posts
