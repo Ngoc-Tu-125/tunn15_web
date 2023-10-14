@@ -5,6 +5,8 @@ from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.utils import timezone
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFill
 
 from .managers import CustomUserManager
 
@@ -53,6 +55,10 @@ class BlogPost(models.Model):
     body_snippet = models.TextField()
     full_content = RichTextUploadingField()
     slug = models.SlugField(unique=True)
+    optimized_image = ImageSpecField(source='image',
+                                      processors=[ResizeToFill(600, 400)],
+                                      format='JPEG',
+                                      options={'quality': 85})
 
     def __str__(self):
         return self.title
@@ -76,6 +82,11 @@ class TechBlogPost(models.Model):
     full_content = RichTextUploadingField(default="Tech Blog full content")
     slug = models.SlugField(unique=True)
     tech_type = models.CharField(max_length=50, choices=TECHBLOG_TYPE_CHOICES, help_text="Type of the technical blog post.")
+    optimized_image = ImageSpecField(source='image',
+                                      processors=[ResizeToFill(600, 400)],
+                                      format='JPEG',
+                                      options={'quality': 85})
+
 
     def __str__(self):
         return self.title
@@ -88,6 +99,10 @@ class Card(models.Model):
     image = models.ImageField(upload_to='cards/')
     title = models.CharField(max_length=200)
     short_intro = models.TextField()
+    optimized_image = ImageSpecField(source='image',
+                                      processors=[ResizeToFill(400, 400)],
+                                      format='JPEG',
+                                      options={'quality': 85})
 
     def __str__(self):
         return self.title
@@ -97,6 +112,10 @@ class ImageDetail(models.Model):
     card = models.ForeignKey(Card, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='details/')
     caption = models.CharField(max_length=300)
+    optimized_image = ImageSpecField(source='image',
+                                      processors=[ResizeToFill(400, 400)],
+                                      format='JPEG',
+                                      options={'quality': 85})
 
     def __str__(self):
         return self.caption
@@ -109,3 +128,7 @@ class HomePageContent(models.Model):
     title = models.TextField(null=True, blank=True)
     content = models.TextField(null=True, blank=True)
     image = models.ImageField(upload_to='images/', null=True, blank=True)
+    optimized_image = ImageSpecField(source='image',
+                                      processors=[ResizeToFill(600, 400)],
+                                      format='JPEG',
+                                      options={'quality': 85})

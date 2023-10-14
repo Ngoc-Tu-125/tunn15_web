@@ -21,7 +21,7 @@
         </div>
         <div id="development-img">
             {% if intro_content.image %}
-                <img id="display-img-intro" class="rounded-corners-35px" src="{{ intro_content.image.url }}" alt="Image Description" title="Description" />
+                <img id="display-img-intro" class="rounded-corners-35px" src="{{ intro_content.optimized_image.url }}" alt="Image Description" title="Description" />
             {% else %}
                 <img id="display-img-intro" src="https://www.dropbox.com/s/7hwnjccu15vt90e/mobileDevlopment.svg?raw=1" alt="Image Description" title="Description" />
             {% endif %}
@@ -47,7 +47,7 @@
 
         <div class="col-5 delivery-img">
             {% if delivery_content.image %}
-                <img id="display-img-delivery" class="rounded-corners-35px" src="{{ delivery_content.image.url }}" alt="Image Description" title="Description"/>
+                <img id="display-img-delivery" class="rounded-corners-35px" src="{{ delivery_content.optimized_image.url }}" alt="Image Description" title="Description"/>
             {% else %}
                 <img id="display-img-delivery" src="https://www.dropbox.com/s/ipx91osglyczpdt/delivery_experience.svg?raw=1" alt="Image Description" title="Description"/>
             {% endif %}
@@ -99,7 +99,7 @@
             </div>
             <div class="col-6 slide-img">
                 {% if success_story_content.image %}
-                    <img id="display-img-success" class="rounded-corners-35px" src="{{ success_story_content.image.url }}" alt="Image Description" title="Description"/>
+                    <img id="display-img-success" class="rounded-corners-35px" src="{{ success_story_content.optimized_image.url }}" alt="Image Description" title="Description"/>
                 {% else %}
                     <img id="display-img-success" src="https://www.dropbox.com/s/ipx91osglyczpdt/delivery_experience.svg?raw=1" alt="Image Description" title="Description"/>
                 {% endif %}

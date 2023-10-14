@@ -8,7 +8,7 @@
 <div class="container">
     {% for card in cards %}
         <div class="card">
-            <img class="rounded-corners-25px" src="{{ card.image.url }}">
+            <img class="rounded-corners-25px" src="{{ card.optimized_image.url }}">
             <div class="card-body">
                 <div class="card-text">
                     <h3>{{ card.title }}</h3>
