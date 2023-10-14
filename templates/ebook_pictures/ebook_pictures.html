@@ -2,11 +2,24 @@
 {% load static %}
 
 {% block content %}
-    <div class="clearfix">
-        <link rel="stylesheet" href="{% static 'css/blog/blog_styles.css' %}">
-        <section id="main-blog">
-            <h1>Ebook Pictures!</h1>
-            <p>This is the Ebook Pictures content.</p>
-        </section>
-    </div>
+
+<link rel="stylesheet" href="{% static 'css/ebook_pictures/ebook_pictures_styles.css' %}">
+
+<div class="container">
+    {% for card in cards %}
+        <div class="card">
+            <img class="rounded-corners-25px" src="{{ card.image.url }}">
+            <div class="card-body">
+                <div class="card-text">
+                    <h3>{{ card.title }}</h3>
+                    <p>{{ card.short_intro }}</p>
+                </div>
+                <button><a href="{% url 'ebook_picture_details' card_id=card.id %}">More...</a></button>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<script src="{% static 'js/ebook_pictures/ebook_picture_actions.js' %}"></script>
+
 {% endblock %}

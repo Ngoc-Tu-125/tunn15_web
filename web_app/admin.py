@@ -4,6 +4,7 @@ from django.contrib.auth.admin import UserAdmin
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 from .models import CustomUser, BlogPost, TechBlogPost, SocialLink
 from .models import SocialLink
+from .models import Card, ImageDetail
 
 # Social Link
 admin.site.register(SocialLink)
@@ -23,6 +24,16 @@ class TechBlogPostAdmin(admin.ModelAdmin):
     list_display = ('title', 'tech_type', 'date_published',)  # Display tech_type in the list view
     search_fields = ('title', 'tech_type',)  # Allow searching by title and tech_type
     prepopulated_fields = {'slug': ('title',)}
+
+
+# Ebook pictures
+@admin.register(Card)
+class CardAdmin(admin.ModelAdmin):
+    list_display = ['title', 'short_intro']
+
+@admin.register(ImageDetail)
+class ImageDetailAdmin(admin.ModelAdmin):
+    list_display = ['card', 'caption']
 
 
 # Custom Admin

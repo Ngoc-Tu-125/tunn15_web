@@ -81,6 +81,25 @@ class TechBlogPost(models.Model):
         return self.title
 
 
+####################################################################################
+# EBOOK PICTURES MODELS
+####################################################################################
+class Card(models.Model):
+    image = models.ImageField(upload_to='cards/')
+    title = models.CharField(max_length=200)
+    short_intro = models.TextField()
+
+    def __str__(self):
+        return self.title
+
+
+class ImageDetail(models.Model):
+    card = models.ForeignKey(Card, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='details/')
+    caption = models.CharField(max_length=300)
+
+    def __str__(self):
+        return self.caption
 
 ####################################################################################
 # HOME PAGE CONTENT MODELS

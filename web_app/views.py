@@ -12,7 +12,8 @@ from django.views.decorators.csrf import csrf_exempt
 from .forms import CustomUserCreationForm
 from .models import CustomUser, BlogPost, TechBlogPost
 from .models import HomePageContent
-from .models import SocialLink, PLATFORM_CHOICES, TECHBLOG_TYPE_CHOICES
+from .models import SocialLink, PLATFORM_CHOICES
+from .models import Card
 
 
 from django.conf import settings
@@ -35,14 +36,18 @@ def filter_tech_blog_posts(request):
     return JsonResponse(posts_list, safe=False)
 
 ####################################################################################
-# GENERAL FUNCTIONS
+# Utility Functions
 ####################################################################################
 def get_social_links():
-     # Process with footer
     platform_order = {name[0]: index for index, name in enumerate(PLATFORM_CHOICES)}
-    social_links = sorted(SocialLink.objects.all(), key=lambda x: platform_order[x.platform])
+    return sorted(SocialLink.objects.all(), key=lambda x: platform_order[x.platform])
 
-    return social_links
+####################################################################################
+# Error Handling
+####################################################################################
+def error_500_view(request, exception=None):
+    return render(request, 'error_500.html'), 500
+
 
 ####################################################################################
 # MAIN VIEWS
@@ -124,16 +129,8 @@ def save_content(request, section_name):
     return JsonResponse({'success': False})
 
 ####################################################################################
-# SIGN IN VIEWS
+# Authentication Views VIEWS
 ####################################################################################
-
-def check_email_exists(request):
-    email = request.GET.get('email', None)
-    exists = CustomUser.objects.filter(email=email).exists()
-
-    return JsonResponse({'exists': exists})
-
-
 def signup(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
@@ -153,6 +150,7 @@ def signup(request):
 
     return render(request, 'auth/login.html', {'form': form})
 
+
 def login(request):
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -167,9 +165,17 @@ def login(request):
             messages.error(request, 'Invalid email or password.')
     return render(request, 'auth/login.html')
 
+
 def logout(request):
     auth_logout(request)
     return redirect('home')
+
+
+def check_email_exists(request):
+    email = request.GET.get('email', None)
+    exists = CustomUser.objects.filter(email=email).exists()
+
+    return JsonResponse({'exists': exists})
 
 
 ####################################################################################
@@ -311,6 +317,20 @@ def tech_blog_detail(request, post_slug):
 
     # Render the detailed tech blog view template
     return render(request, 'tech_blog/tech_blog_detail_template.html', context)
+
+
+####################################################################################
+# EBOOK PICTURES PAGE
+####################################################################################
+def ebook_pictures(request):
+    cards = Card.objects.all()
+    return render(request, 'ebook_pictures/ebook_pictures.html', {'cards': cards})
+
+
+def ebook_picture_details(request, card_id):
+    card = Card.objects.get(id=card_id)
+    images = card.imagedetail_set.all()
+    return render(request, 'ebook_pictures/ebook_picture_details.html', {'card': card, 'images': images})
 
 
 ####################################################################################

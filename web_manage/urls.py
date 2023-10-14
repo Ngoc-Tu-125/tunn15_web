@@ -39,6 +39,7 @@ urlpatterns = [
     path('tech_blog/<slug:post_slug>/', views.tech_blog_detail, name='tech_blog_detail'),
 
     path('ebook_pictures/', views.ebook_pictures, name='ebook_pictures'),
+    path('ebook_pictures/<int:card_id>/', views.ebook_picture_details, name='ebook_picture_details'),
 
     path('contacts/', views.contacts, name='contacts'),
 

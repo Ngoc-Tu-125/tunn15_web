@@ -1310,6 +1310,7 @@ html {
 
 
   /* Image rounded corners 25px */
+
   img.rounded-corners-25px {
       border-radius: 25px;
     }
