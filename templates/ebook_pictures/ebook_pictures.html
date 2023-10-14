@@ -14,7 +14,7 @@
                     <h3>{{ card.title }}</h3>
                     <p>{{ card.short_intro }}</p>
                 </div>
-                <button><a href="{% url 'ebook_picture_details' card_id=card.id %}">More...</a></button>
+                <button data-url="{% url 'ebook_picture_details' card.id %}">Xem thêm...</button>
             </div>
         </div>
     {% endfor %}

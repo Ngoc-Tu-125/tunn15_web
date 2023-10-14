@@ -3,12 +3,16 @@ from django.contrib.auth.admin import UserAdmin
 
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 from .models import CustomUser, BlogPost, TechBlogPost, SocialLink
-from .models import SocialLink
+from .models import SocialLink, HomePageContent
 from .models import Card, ImageDetail
 
 # Social Link
 admin.site.register(SocialLink)
 
+# Home page content
+@admin.register(HomePageContent)
+class HomePageContentAdmin(admin.ModelAdmin):
+    list_display = ['section_name', 'title']
 
 # Blog Post
 @admin.register(BlogPost)

@@ -499,7 +499,7 @@ html {
 
         .social-links a:not(:last-child) {
             margin-right: 10px;
-            /* text-decoration: none; */
+            text-decoration: none;
         }
 
         .social-links a:hover, .social-links a:focus {

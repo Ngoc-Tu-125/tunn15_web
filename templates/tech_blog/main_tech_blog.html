@@ -49,18 +49,6 @@
 
                     <p id="display-content-about" class="widget-body">{{ about_content.content }}</p>
                     <textarea id="editable-content-about" class="hidden">{{ about_content.content }}</textarea>
-
-                    {% if is_staff %}
-                        <div class="update-buttons">
-                            <button onclick="editContent('display-title-about', 'editable-title-about', 'update-title-about')">Update Title</button>
-                            <button id="update-title-about" class="hidden" onclick="saveContent('editable-title-about', 'display-title-about')">Save Title</button>
-                            <button onclick="editContent('display-content-about', 'editable-content-about', 'update-content-about')">Update Content</button>
-                            <button id="update-content-about" class="hidden" onclick="saveContent('editable-content-about', 'display-content-about')">Save Content</button>
-                        </div>
-                        <input type="file" id="image-upload-about" class="hidden" onchange="previewImage(this, 'display-img-about')" />
-                        <button onclick="document.getElementById('image-upload-about').click()">Update Image</button>
-                        <button id="upload-button-about" class="hidden" onclick="uploadImage('image-upload-about', 'display-img-about')">Upload</button>
-                    {% endif %}
                 </div>
 
                 <div class="sidebar-widget" data-section="techblog-types">
@@ -114,8 +102,6 @@
         {% endif %}
 
     </section>
-
-    <script src="{% static 'js/base/edit_content.js' %}"></script>
 
     <script>
         function filterByType(techType) {

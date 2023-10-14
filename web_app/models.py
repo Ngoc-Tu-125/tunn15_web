@@ -129,6 +129,6 @@ class HomePageContent(models.Model):
     content = models.TextField(null=True, blank=True)
     image = models.ImageField(upload_to='images/', null=True, blank=True)
     optimized_image = ImageSpecField(source='image',
-                                      processors=[ResizeToFill(600, 400)],
+                                      processors=[ResizeToFill(500, 400)],
                                       format='JPEG',
                                       options={'quality': 85})

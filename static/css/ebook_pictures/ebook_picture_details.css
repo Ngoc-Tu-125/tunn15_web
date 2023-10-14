@@ -9,6 +9,9 @@ grid-gap: 1.6em;
 grid-template: auto / repeat(auto-fill, minmax(27em, 27em));
 }
 
+.search-bar{
+    text-align: center;
+}
 
 input[id="search"] {
     width: 30%;

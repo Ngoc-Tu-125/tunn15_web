@@ -252,7 +252,7 @@ def tech_blog_home(request):
     # Get edit info
     is_staff = request.user.is_staff
     about_content = HomePageContent.objects.get_or_create(
-        section_name='about_me',
+        section_name='about',
         defaults={'title': "VỀ MÌNH", 'content': "I find life better, and I'm happier, when things are nice and simple."}
     )[0]
 
@@ -324,13 +324,28 @@ def tech_blog_detail(request, post_slug):
 ####################################################################################
 def ebook_pictures(request):
     cards = Card.objects.all()
-    return render(request, 'ebook_pictures/ebook_pictures.html', {'cards': cards})
+
+    # Get contex for web
+    context = {
+        'cards': cards,
+        'social_links': get_social_links(),
+    }
+
+    return render(request, 'ebook_pictures/ebook_pictures.html', context)
 
 
 def ebook_picture_details(request, card_id):
     card = Card.objects.get(id=card_id)
     images = card.imagedetail_set.all()
-    return render(request, 'ebook_pictures/ebook_picture_details.html', {'card': card, 'images': images})
+
+    # Get contex for web
+    context = {
+        'card': card,
+        'images': images,
+        'social_links': get_social_links(),
+    }
+
+    return render(request, 'ebook_pictures/ebook_picture_details.html', context)
 
 
 ####################################################################################
