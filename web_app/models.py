@@ -1,5 +1,6 @@
+import os
+from django.conf import settings
 from django.db import models
-
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
@@ -7,6 +8,7 @@ from ckeditor_uploader.fields import RichTextUploadingField
 from django.utils import timezone
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
+from PIL import Image
 
 from .managers import CustomUserManager
 
@@ -63,6 +65,12 @@ class BlogPost(models.Model):
     def __str__(self):
         return self.title
 
+    def delete(self, *args, **kwargs):
+        # Delete the image file from the filesystem
+        if self.image and os.path.isfile(os.path.join(settings.MEDIA_ROOT, self.image.path)):
+            os.remove(os.path.join(settings.MEDIA_ROOT, self.image.path))
+        super(BlogPost, self).delete(*args, **kwargs)
+
 
 ####################################################################################
 # TECH BLOG POST MODELS
@@ -91,6 +99,12 @@ class TechBlogPost(models.Model):
     def __str__(self):
         return self.title
 
+    def delete(self, *args, **kwargs):
+        # Delete the image file from the filesystem
+        if self.image and os.path.isfile(os.path.join(settings.MEDIA_ROOT, self.image.path)):
+            os.remove(os.path.join(settings.MEDIA_ROOT, self.image.path))
+        super(TechBlogPost, self).delete(*args, **kwargs)
+
 
 ####################################################################################
 # EBOOK PICTURES MODELS
@@ -107,6 +121,32 @@ class Card(models.Model):
     def __str__(self):
         return self.title
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        # Open the image using Pillow:
+        img = Image.open(self.image.path)
+
+        # Resize the image if it's too large:
+        max_width = 1920
+        max_height = 1280
+        if img.width > max_width or img.height > max_height:
+            base_width = max_width
+            w_percent = base_width / float(img.width)
+            h_size = int(float(img.height) * float(w_percent))
+            img = img.resize((base_width, h_size), Image.LANCZOS)
+
+        # Save the optimized image:
+        img.save(self.image.path, format='JPEG', quality=85)  # Quality level can be adjusted based on your needs
+
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        # Delete the image file from the filesystem
+        if self.image and os.path.isfile(os.path.join(settings.MEDIA_ROOT, self.image.path)):
+            os.remove(os.path.join(settings.MEDIA_ROOT, self.image.path))
+        super(Card, self).delete(*args, **kwargs)
+
 
 class ImageDetail(models.Model):
     card = models.ForeignKey(Card, on_delete=models.CASCADE)
@@ -120,6 +160,32 @@ class ImageDetail(models.Model):
     def __str__(self):
         return self.caption
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        # Open the image using Pillow:
+        img = Image.open(self.image.path)
+
+        # Resize the image if it's too large:
+        max_width = 1920
+        max_height = 1280
+        if img.width > max_width or img.height > max_height:
+            base_width = max_width
+            w_percent = base_width / float(img.width)
+            h_size = int(float(img.height) * float(w_percent))
+            img = img.resize((base_width, h_size), Image.LANCZOS)
+
+        # Save the optimized image:
+        img.save(self.image.path, format='JPEG', quality=85)  # Quality level can be adjusted based on your needs
+
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        # Delete the image file from the filesystem
+        if self.image and os.path.isfile(os.path.join(settings.MEDIA_ROOT, self.image.path)):
+            os.remove(os.path.join(settings.MEDIA_ROOT, self.image.path))
+        super(ImageDetail, self).delete(*args, **kwargs)
+
 ####################################################################################
 # HOME PAGE CONTENT MODELS
 ####################################################################################
@@ -132,3 +198,9 @@ class HomePageContent(models.Model):
                                       processors=[ResizeToFill(500, 400)],
                                       format='JPEG',
                                       options={'quality': 85})
+
+    def delete(self, *args, **kwargs):
+        # Delete the image file from the filesystem
+        if self.image and os.path.isfile(os.path.join(settings.MEDIA_ROOT, self.image.path)):
+            os.remove(os.path.join(settings.MEDIA_ROOT, self.image.path))
+        super(HomePageContent, self).delete(*args, **kwargs)

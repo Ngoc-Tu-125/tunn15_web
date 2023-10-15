@@ -1,6 +1,26 @@
 {% extends "base/base.html" %}
 
 {% block content %}
-    <h2>Need to Sign In</h2>
-    <p>You need to sign in to view this page.</p>
+<style>
+    .center-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column; /* This ensures the items are stacked vertically */
+    }
+
+    .signin-link {
+        color: blue; /* Change this to whatever color you want for the link */
+        text-decoration: none; /* This removes the underline from the link */
+        transition: color 0.3s ease; /* This ensures a smooth color transition on hover */
+    }
+
+    .signin-link:hover {
+        color: darkblue; /* This is the color on hover */
+    }
+</style>
+<div class="center-content">
+    <h2>Bạn cần đăng nhập để xem trang này!</h2>
+    <p>Hãy bấm vào <a href="{% url 'login' %}" class="signin-link">Sign in</a> để truy đăng nhập, và đăng ký nếu bạn chưa có tài khoản nhé.</p>
+</div>
 {% endblock %}

@@ -26,3 +26,13 @@ and delete the migration file(s) related to TechBlogPost that are causing issues
 
 python manage.py makemigrations
 python manage.py migrate
+
+
+
+
+
+
+
+
+SET client_encoding = 'UTF8';
+SELECT * FROM web_app_homepagecontent;

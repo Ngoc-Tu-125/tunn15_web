@@ -12,14 +12,17 @@
 
     <div class="images-container">
         {% for image_detail in images %}
-            <a href="{{ image_detail.image.url }}" data-caption="{{ image_detail.caption }}">
-                <img src="{{ image_detail.optimized_image.url }}" alt="{{ image_detail.caption }}">
-            </a>
+            <div class="image-wrapper">
+                <a href="{{ image_detail.image.url }}" data-caption="{{ image_detail.caption }}">
+                    <img src="{{ image_detail.optimized_image.url }}" alt="{{ image_detail.caption }}">
+                </a>
+                <button class="download-btn" data-image-url="{{ image_detail.image.url }}" data-caption="{{ image_detail.caption }}">Tải xuống</button>
+            </div>
         {% endfor %}
-
     </div>
 </div>
 
 <script src="{% static 'js/ebook_pictures/ebook_picture_detail_actions.js' %}"></script>
+<script src="{% static 'js/ebook_pictures/download_actions.js' %}"></script>
 
 {% endblock %}

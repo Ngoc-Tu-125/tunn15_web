@@ -51,6 +51,38 @@ input[id="search"] {
     object-fit: cover;
 }
 
+/* Download button */
+.image-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.images-container a {
+    display: block;
+    position: relative;
+}
+
+.images-container img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+.download-btn {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    background-color: rgba(116, 114, 114, 0.7);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 2;
+}
+
+
 
 /*!
  * baguetteBox.js
