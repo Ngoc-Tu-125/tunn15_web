@@ -88,10 +88,6 @@ a {
   text-decoration: none;
 }
 
-a:hover {
-  text-decoration: underline;
-}
-
 @media (max-width: 570px) {
   .container {
     grid-template: auto / 1fr;

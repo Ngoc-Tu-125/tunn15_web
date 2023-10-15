@@ -91,13 +91,6 @@ nav a{
   padding: 0.25em 0;
 }
 
-nav a:hover,
-nav a:focus{
-  color: #143774;
-  border-bottom: 1px solid black;
-  transition: .3s ease;
-}
-
 img{
   max-width: 100%;
   display: block;
