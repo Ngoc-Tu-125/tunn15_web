@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from adminsortable2.admin import SortableAdminMixin
 
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 from .models import CustomUser, BlogPost, TechBlogPost, SocialLink
@@ -33,11 +34,13 @@ class TechBlogPostAdmin(admin.ModelAdmin):
 # Ebook pictures
 @admin.register(Card)
 class CardAdmin(admin.ModelAdmin):
-    list_display = ['title', 'short_intro']
+    list_display = ['title', 'short_intro', 'order']
+    list_editable = ['order']  # Allow editing order directly from the admin list view
 
 @admin.register(ImageDetail)
 class ImageDetailAdmin(admin.ModelAdmin):
-    list_display = ['card', 'caption']
+    list_display = ['card', 'caption', 'order']
+    list_editable = ['order']  # Allow editing order directly from the admin list view
 
 
 # Custom Admin

@@ -3,7 +3,7 @@
 body {
     margin: 0;
     font-family: 'Ubuntu', sans-serif;
-    font-size: 1.125rem;
+    /* font-size: 1.125rem; */
     font-weight: 300;
 }
 #main-blog {

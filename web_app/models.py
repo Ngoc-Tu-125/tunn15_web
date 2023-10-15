@@ -117,6 +117,7 @@ class Card(models.Model):
                                       processors=[ResizeToFill(400, 400)],
                                       format='JPEG',
                                       options={'quality': 85})
+    order = models.PositiveIntegerField(default=0, blank=False, null=False)
 
     def __str__(self):
         return self.title
@@ -147,6 +148,9 @@ class Card(models.Model):
             os.remove(os.path.join(settings.MEDIA_ROOT, self.image.path))
         super(Card, self).delete(*args, **kwargs)
 
+    class Meta:
+        ordering = ['order']
+
 
 class ImageDetail(models.Model):
     card = models.ForeignKey(Card, on_delete=models.CASCADE)
@@ -156,6 +160,7 @@ class ImageDetail(models.Model):
                                       processors=[ResizeToFill(400, 400)],
                                       format='JPEG',
                                       options={'quality': 85})
+    order = models.PositiveIntegerField(default=0, blank=False, null=False)
 
     def __str__(self):
         return self.caption
@@ -185,6 +190,9 @@ class ImageDetail(models.Model):
         if self.image and os.path.isfile(os.path.join(settings.MEDIA_ROOT, self.image.path)):
             os.remove(os.path.join(settings.MEDIA_ROOT, self.image.path))
         super(ImageDetail, self).delete(*args, **kwargs)
+
+    class Meta:
+        ordering = ['order']
 
 ####################################################################################
 # HOME PAGE CONTENT MODELS
