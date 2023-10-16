@@ -42,6 +42,14 @@ SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
 
+CSRF_COOKIE_DOMAIN = ".ngoctu125.com"
+CSRF_TRUSTED_ORIGINS = [
+    'https://ngoctu125.com',
+    'https://www.ngoctu125.com',
+]
+
+
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
