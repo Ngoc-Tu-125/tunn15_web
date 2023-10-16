@@ -12,6 +12,33 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+document.addEventListener("DOMContentLoaded", function() {
+    // Get references to the search input and images container
+    const searchInput = document.getElementById("search");
+    const imagesContainer = document.querySelector(".images-container");
+
+    // Add an event listener to the search input
+    searchInput.addEventListener("input", function() {
+        const searchTerm = searchInput.value.toLowerCase();
+
+        // Loop through all image wrappers and toggle their visibility
+        const imageWrappers = imagesContainer.querySelectorAll(".image-wrapper");
+        imageWrappers.forEach(function(imageWrapper) {
+            const caption = imageWrapper.querySelector("a").getAttribute("data-caption").toLowerCase();
+            const downloadBtn = imageWrapper.querySelector(".download-btn");
+
+            if (caption.includes(searchTerm)) {
+                imageWrapper.style.display = "block";
+                downloadBtn.style.display = "block";
+            } else {
+                imageWrapper.style.display = "none";
+                downloadBtn.style.display = "none";
+            }
+        });
+    });
+});
+
+
 function createDownloadableImageCard(imageUrl, title, shortIntro) {
     const img = new Image();
     img.crossOrigin = "anonymous";
