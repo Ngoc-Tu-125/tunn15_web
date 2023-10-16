@@ -51,7 +51,7 @@ strong {
 .article-read-more,
 .article-info {
     font-size: .875rem;
-    font-family: Arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .article-read-more {
@@ -103,7 +103,7 @@ main{
   width: 100%;
   text-align: justify;
 }
-.sidebar{
+.sidebar {
   max-width: 23%;
 }
 .sidebar .widget-lastest-post img {
