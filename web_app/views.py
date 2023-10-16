@@ -321,10 +321,10 @@ def ebook_pictures(request):
         'social_links': get_social_links(),
     }
 
-    if request.user.is_authenticated:
-        return render(request, 'ebook_pictures/ebook_pictures.html', context)
-    else:
-        return render(request, 'auth/login_required_prompt.html', context)
+    #if request.user.is_authenticated:
+    return render(request, 'ebook_pictures/ebook_pictures.html', context)
+    #else:
+    #   return render(request, 'auth/login_required_prompt.html', context)
 
 
 def ebook_picture_details(request, card_id):

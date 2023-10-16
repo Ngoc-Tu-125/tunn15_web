@@ -1,0 +1,307 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora&family=Ubuntu:wght@300;400;700&display=swap');
+body {
+    margin: 0;
+    font-family: 'Ubuntu', sans-serif;
+    /* font-size: 1.125rem; */
+    font-weight: 300;
+}
+#main-blog {
+    flex: 1;
+    margin-bottom: 50px;
+    position: relative;
+}
+
+h1,
+h2,
+h3 {
+    font-family: 'Lora', serif;
+    font-weight: 400;
+    color: #143774;
+    margin-top: 1em;
+}
+h1{
+  font-size: 2rem;
+  margin: 0;
+}
+a {
+    color: #1792d2;
+}
+
+a:hover,
+a:focus {
+    color: #143774;
+}
+
+strong {
+    font-weight: 700;
+}
+.subtitle{
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin: 0;
+  color: #1792d2;
+  letter-spacing: 0.05em;
+  font-family: 'Ubuntu Bold', sans-serif;
+}
+.article-title {
+    font-size: 1.5rem;
+}
+
+.article-read-more,
+.article-info {
+    font-size: .875rem;
+    font-family: Arial, sans-serif;
+}
+
+.article-read-more {
+    color: #1792d2;
+    text-decoration: none;
+    font-weight: 700;
+}
+.article-read-more:hover,
+.article-read-more:focus {
+    color: #143774;
+    text-decoration: underline;
+}
+.article-info {
+    margin: 2em 0;
+}
+
+.container-flex{
+  max-width: 70vw;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1em;
+}
+nav ul{
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+}
+nav li{
+  margin: 0 1em;
+}
+nav a{
+  text-decoration: none;
+  color: #707070;
+  font-weight: 700;
+  padding: 0.25em 0;
+}
+
+img{
+  max-width: 100%;
+  display: block;
+}
+main{
+  max-width: 75%;
+}
+/* Side bar start */
+.article-body{
+  width: 100%;
+  text-align: justify;
+}
+.sidebar{
+  max-width: 23%;
+}
+.sidebar .widget-lastest-post img {
+  height: 130px;
+  width: 206px;
+}
+.widget-lastest-post {
+  margin-bottom: 15px;
+}
+.widget-lastest-post-title a {
+  text-decoration: none;
+  color: inherit;
+}
+.widget-lastest-post-title a:hover {
+  text-decoration: underline;
+}
+@media (max-width:1050px){
+  .container-flex{
+    flex-direction: column;
+  }
+  .site-title, .subtitle{
+    width: 100%;
+  }
+  main{
+    max-width: 100%;
+  }
+  .sidebar{
+    max-width: 100%;
+  }
+}
+@media (max-width: 500px){
+  nav ul{
+    display: flex;
+    flex-direction: column;
+  }
+  nav li{
+    margin: 0.5em 0;
+  }
+}
+
+/* articles */
+.article-featured {
+    border-bottom: #707070 1px solid;
+    padding-bottom: 2em;
+    margin-bottom: 2em;
+}
+.article-recent {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2em;
+}
+
+.article-recent-main {
+    order: 2;
+}
+
+.article-recent-secondary {
+    order: 1;
+}
+
+.article-recent-secondary img {
+  height: 128px;
+  width: 201px;
+}
+
+@media (min-width: 675px) {
+    .article-recent {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .article-recent-main {
+        width: 68%;
+    }
+
+    .article-recent-secondary {
+        width: 30%;
+    }
+}
+
+img.featured-image {
+  width: 800px;
+  height: 508px;
+}
+
+.centered-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; /* This ensures items inside the container stack vertically */
+}
+
+img.centered-image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.parent-container img {
+  max-width: 100%;  /* Ensure image doesn't overflow container */
+}
+
+
+
+/* Blog detail */
+.title-blog-detail {
+  text-align: center;
+  font-size: 2em;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+
+.blog-detail-image-container {
+  display: block;
+  position: relative;
+  width: 100%; /* Full width of its container */
+  padding-bottom: 66.66%; /* 2/3 of the width */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+img.blog-detail-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Pagination */
+.pagination {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.step-links {
+  display: inline-block;
+  list-style: none;
+  padding: 0;
+}
+
+.step-links a, .step-links span {
+  display: inline-block;
+  margin: 0 5px;
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  color: #666;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.step-links a:hover {
+  background-color: #1792d2e0;
+  color: #fff;
+}
+
+.step-links .current {
+  background-color: #f5f5f5;
+  color: #333;
+  /* font-weight: bold; */
+}
+
+/* If you prefer, you can give the 'Next' and 'Last' links a different style to make them stand out */
+.step-links a:last-child {
+  background-color: #1792d2e0;
+  color: #fff;
+}
+
+.step-links a:last-child:hover {
+  background-color: #143774;
+}
+
+.step-links a:first-child {
+  background-color: #1792d2e0;
+  color: #fff;
+}
+
+.step-links a:first-child:hover {
+  background-color: #143774;
+}
+
+
+/* Tech blog css */
+.techblog-type {
+  cursor: pointer; /* Makes the mouse cursor appear as a hand, indicating something is clickable */
+  text-decoration: none; /* Ensures that there's no underline by default */
+  color: inherit; /* Uses the default text color */
+  transition: color 0.3s ease, text-decoration 0.3s ease; /* Smoothens the color and underline change */
+}
+
+.techblog-type:hover {
+  color: blue; /* Changes the text color to blue on hover */
+  text-decoration: underline; /* Adds an underline on hover */
+}
+
+.techblog-type-icon {
+  width: 20px; /* Set the width to match the font size */
+  height: 20px; /* Set the height to match the font size */
+}
