@@ -2,6 +2,8 @@
 {% load static %}
 
 {% block content %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/default.min.css">
+
     <div class="clearfix">
         <link rel="stylesheet" href="{% static 'css/blog/blog_styles.css' %}">
         <section id="main-blog">
@@ -39,4 +41,6 @@
             </div>
         </section>
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
 {% endblock %}

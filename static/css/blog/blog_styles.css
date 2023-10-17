@@ -12,6 +12,15 @@ body {
     position: relative;
 }
 
+p {
+  color: #2e2e2e;
+}
+
+pre {
+  overflow-x: auto;
+  font-size: 16px;
+}
+
 h1,
 h2,
 h3 {
