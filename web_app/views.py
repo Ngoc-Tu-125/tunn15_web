@@ -217,6 +217,12 @@ def blog_home(request):
 
 
 def blog_detail(request, post_slug):
+
+    about_content = HomePageContent.objects.get_or_create(
+        section_name='about',
+        defaults={'title': "VỀ MÌNH", 'content': "I find life better, and I'm happier, when things are nice and simple."}
+    )[0]
+
     # Fetch the blog post based on the provided slug
     post = get_object_or_404(BlogPost, slug=post_slug)
 
@@ -227,6 +233,7 @@ def blog_detail(request, post_slug):
     # Context data
     context = {
         'post': post,
+        'about_content': about_content,
         'lastest_posts': lastest_posts,
         'social_links': get_social_links(),
     }
@@ -292,6 +299,11 @@ def tech_blog_home(request):
 
 
 def tech_blog_detail(request, post_slug):
+
+    about_content = HomePageContent.objects.get_or_create(
+        section_name='about',
+        defaults={'title': "VỀ MÌNH", 'content': "I find life better, and I'm happier, when things are nice and simple."}
+    )[0]
     # Fetch the tech blog post based on the provided slug
     tech_post = get_object_or_404(TechBlogPost, slug=post_slug)
 
@@ -301,6 +313,7 @@ def tech_blog_detail(request, post_slug):
     # Context data
     context = {
         'tech_post': tech_post,
+        'about_content': about_content,
         'latest_tech_posts': latest_tech_posts,
         'social_links': get_social_links(),
     }

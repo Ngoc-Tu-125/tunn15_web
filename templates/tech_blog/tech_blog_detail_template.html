@@ -18,10 +18,30 @@
 
 
                 <aside class="sidebar">
-                    <div class="sidebar-widget">
-                        <h2 class="widget-title">VỀ MÌNH</h2>
-                        <img class="rounded-corners-25px" src="https://raw.githubusercontent.com/kevin-powell/reponsive-web-design-bootcamp/master/Module%202-%20A%20simple%20life/img/about-me.jpg" alt="john doe" class="widget-image">
-                        <p class="widget-body">I find life better, and I'm happier, when things are nice and simple.</p>
+                    <div class="sidebar-widget" data-section="about">
+                        <h2 class="widget-title" id="display-title-about">VỀ MÌNH</h2>
+                        <textarea id="editable-title-about" class="hidden">{{ about_content.title }}</textarea>
+
+                        {% if about_content.image %}
+                            <img id="display-img-about" class="rounded-corners-25px" src="{{ about_content.image.url }}" alt="About Image">
+                        {% else %}
+                            <img id="display-img-about" class="rounded-corners-25px" src="https://raw.githubusercontent.com/kevin-powell/reponsive-web-design-bootcamp/master/Module%202-%20A%20simple%20life/img/about-me.jpg" alt="About Image">
+                        {% endif %}
+
+                        <p id="display-content-about" class="widget-body">{{ about_content.content }}</p>
+                        <textarea id="editable-content-about" class="hidden">{{ about_content.content }}</textarea>
+                    </div>
+
+                    <div class="sidebar-widget" data-section="techblog-types">
+                        <h2 class="widget-title">LỌC</h2>
+                        <div class="techblog-types-container">
+                            {% for blog_type in tech_blog_types %}
+                                <div class="techblog-type" onclick="filterByType('{{ blog_type.type }}')">
+                                    <i class="{{ blog_type.icon }}" style='font: size 1.17em;'> </i>
+                                    {{ blog_type.display_name }}
+                                </div>
+                            {% endfor %}
+                        </div>
                     </div>
 
                     <div class="sidebar-widget">
