@@ -2,7 +2,8 @@
 min-height: 100vh;
 width: 100%;
 margin: auto;
-padding: 1.6em;
+padding-top: 1.6em;
+padding-bottom: 1.6em;
 justify-content: center;
 align-content: start;
 grid-gap: 1.6em;
