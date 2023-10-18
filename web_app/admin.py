@@ -32,10 +32,16 @@ class TechBlogPostAdmin(admin.ModelAdmin):
 
 
 # Ebook pictures
+class ImageDetailInline(admin.TabularInline):
+    model = ImageDetail
+    extra = 1
+    fields = ['caption', 'order']
+
 @admin.register(Card)
 class CardAdmin(admin.ModelAdmin):
     list_display = ['title', 'short_intro', 'order']
     list_editable = ['order']  # Allow editing order directly from the admin list view
+    inlines = [ImageDetailInline]
 
 @admin.register(ImageDetail)
 class ImageDetailAdmin(admin.ModelAdmin):
