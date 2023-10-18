@@ -180,7 +180,7 @@ def blog_home(request):
     )[0]
 
     articles_list = BlogPost.objects.all().order_by('-date_published')
-    paginator = Paginator(articles_list, 3)  # Show 10 articles per page
+    paginator = Paginator(articles_list, 5)  # Show 5 articles per page
 
     page = request.GET.get('page')
     try:
@@ -255,7 +255,7 @@ def tech_blog_home(request):
 
     # Get technical articles list
     tech_articles_list = TechBlogPost.objects.all().order_by('-date_published')
-    paginator = Paginator(tech_articles_list, 3)  # Show 3 tech articles per page
+    paginator = Paginator(tech_articles_list, 5)  # Show 5 tech articles per page
 
     page = request.GET.get('page')
     try:
