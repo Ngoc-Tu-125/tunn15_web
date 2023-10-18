@@ -9,6 +9,7 @@ from django.utils import timezone
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 from PIL import Image
+from django.utils.html import format_html
 
 from .managers import CustomUserManager
 
@@ -184,6 +185,10 @@ class ImageDetail(models.Model):
         img.save(self.image.path, format='JPEG', quality=85)  # Quality level can be adjusted based on your needs
 
         super().save(*args, **kwargs)
+
+    def display_image(self):
+        return format_html('<img src="{}" width="50" height="50" />', self.image.url)
+    display_image.short_description = 'Image'
 
     def delete(self, *args, **kwargs):
         # Delete the image file from the filesystem

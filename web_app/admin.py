@@ -36,7 +36,8 @@ class TechBlogPostAdmin(admin.ModelAdmin):
 class ImageDetailInline(admin.TabularInline):
     model = ImageDetail
     extra = 1
-    fields = ['caption', 'order']
+    fields = ['caption', 'display_image', 'order']
+    readonly_fields = ['display_image']
 
 @admin.register(Card)
 class CardAdmin(admin.ModelAdmin):
