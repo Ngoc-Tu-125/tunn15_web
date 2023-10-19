@@ -55,6 +55,7 @@ def error_500_view(request, exception=None):
 def contacts(request):
     # Context data
     context = {
+        'title': 'Contacts',
         'social_links': get_social_links(),
     }
     return render(request, 'contacts/contacts.html', context)
@@ -72,6 +73,7 @@ def home(request):
     # Full context:
     # Context data
     context = {
+            'title': 'Home',
             'intro_content': intro_content,
             'delivery_content': delivery_content,
             'success_story_content': success_story_content,
@@ -206,6 +208,7 @@ def blog_home(request):
 
     # Context data
     context = {
+        'title': 'Blog',
         'articles': articles,
         'lastest_posts': lastest_posts,
         'social_links': get_social_links(),
@@ -232,6 +235,7 @@ def blog_detail(request, post_slug):
 
     # Context data
     context = {
+        'title': post.title,
         'post': post,
         'about_content': about_content,
         'lastest_posts': lastest_posts,
@@ -287,6 +291,7 @@ def tech_blog_home(request):
 
     # Context data
     context = {
+        'title': 'Tech Blog',
         'tech_articles': tech_articles,
         'latest_tech_posts': latest_tech_posts,
         'social_links': get_social_links(),
@@ -312,6 +317,7 @@ def tech_blog_detail(request, post_slug):
 
     # Context data
     context = {
+        'title': tech_post.title,
         'tech_post': tech_post,
         'about_content': about_content,
         'latest_tech_posts': latest_tech_posts,
@@ -330,6 +336,7 @@ def ebook_pictures(request):
 
     # Get contex for web
     context = {
+        'title': 'Ebook Pictures',
         'cards': cards,
         'social_links': get_social_links(),
     }
@@ -346,6 +353,7 @@ def ebook_picture_details(request, card_id):
 
     # Get contex for web
     context = {
+        'title': card.title,
         'card': card,
         'images': images,
         'social_links': get_social_links(),
