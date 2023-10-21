@@ -1020,8 +1020,8 @@ html {
         }
 
         #intro-info span {
-            padding: 0 0 30px;
-            font-size: 15px;
+            padding: 0 0 25px;
+            font-size: 14px;
         }
 
         #intro-info, #development-img {
@@ -1279,11 +1279,6 @@ html {
   @media only screen and (max-width : 320px) {
     #development-img img {
         height: 210px;
-    }
-
-    #intro-info span {
-        padding: 0 0 30px;
-        font-size: 14px;
     }
 
     #services ul li:nth-child(odd) {
