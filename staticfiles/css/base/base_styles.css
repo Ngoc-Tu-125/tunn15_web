@@ -1281,11 +1281,16 @@ html {
         height: 210px;
     }
 
+    #intro-info span {
+        padding: 0 0 30px;
+        font-size: 14px;
+    }
+
     #services ul li:nth-child(odd) {
         margin-right: 0;
     }
 
-    #services ul li:nth-child(even) {
+    #services ul li:nth-child(even) {z
         margin-right: 0;
     }
 
