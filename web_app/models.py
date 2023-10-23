@@ -79,6 +79,7 @@ class BlogPost(models.Model):
 TECHBLOG_TYPE_CHOICES = (
     ('python', 'Python'),
     ('cpp', 'C++'),
+    ('ctdl&gt', 'CTDL & GT'),
     ('test', 'Test'),
     ('other', 'Other')
 )

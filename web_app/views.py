@@ -285,6 +285,7 @@ def tech_blog_home(request):
     tech_blog_types = [
         {"type": "python", "display_name": "Python", "icon": "fab fa-python"},
         {"type": "cpp", "display_name": "C/C++", "icon": "fab fa-cuttlefish"},
+        {"type": "ctdl&gt", "display_name": "CTDL&GT", "icon": "fas fa-globe"},
         {"type": "test", "display_name": "Test", "icon": "fas fa-file-code"},
         {"type": "other", "display_name": "Other", "icon": "fas fa-laptop-code"},
     ]
