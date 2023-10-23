@@ -113,34 +113,41 @@
                 type: "GET",
                 data: { techType: techType },
                 success: function(data) {
-                    // Assuming the main tag is the container for all articles
                     const container = document.querySelector('main');
                     container.innerHTML = '';  // Clear current posts
 
-                    // Loop through the returned data to construct and display posts
-                    data.forEach(post => {
+                    data.forEach((post, index) => {
                         const article = document.createElement('article');
-                        article.className = post.class_name;  // e.g., "article-featured" or "article-recent"
 
-                    // Construct the innerHTML of the article based on your template structure and the returned post data
-                    article.innerHTML = `
-                        <div class="article-recent-main">
-                            <h2 class="article-title">${post.title}</h2>
-                            <p class="article-body">${post.body_snippet}</p>
-                            <a href="/tech_blog/${post.slug}" class="article-read-more">Đọc thêm . . .</a>
-                        </div>
-                        <div class="article-recent-secondary">
-                            <img class="rounded-corners-25px" src="${post.image_url}" alt="${post.title}">
-                            <p class="article-info">${post.date_published}</p>
-                        </div>
-                    `;
+                        if (index === 0) {  // If it's the first post
+                            article.className = "article-featured";
+                            article.innerHTML = `
+                                <h2 class="article-title">${post.title}</h2>
+                                <img class="rounded-corners-25px featured-image" src="${post.image_url}" alt="${post.title}">
+                                <p class="article-info">${post.date_published}</p>
+                                <p class="article-body">${post.body_snippet}</p>
+                                <a href="/tech_blog/${post.slug}" class="article-read-more">Đọc thêm . . .</a>
+                            `;
+                        } else {  // For the rest of the posts
+                            article.className = "article-recent";
+                            article.innerHTML = `
+                                <div class="article-recent-main">
+                                    <h2 class="article-title">${post.title}</h2>
+                                    <p class="article-body">${post.body_snippet}</p>
+                                    <a href="/tech_blog/${post.slug}" class="article-read-more">Đọc thêm . . .</a>
+                                </div>
+                                <div class="article-recent-secondary">
+                                    <img class="rounded-corners-25px" src="${post.image_url}" alt="${post.title}">
+                                    <p class="article-info">${post.date_published}</p>
+                                </div>
+                            `;
+                        }
 
                         container.appendChild(article);
                     });
                 }
             });
         }
-
     </script>
 
 {% endblock %}
