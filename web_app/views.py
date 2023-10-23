@@ -55,6 +55,7 @@ def error_500_view(request, exception=None):
 def contacts(request):
     # Context data
     context = {
+        'title': 'Contacts',
         'social_links': get_social_links(),
     }
     return render(request, 'contacts/contacts.html', context)
@@ -72,6 +73,7 @@ def home(request):
     # Full context:
     # Context data
     context = {
+            'title': 'Home',
             'intro_content': intro_content,
             'delivery_content': delivery_content,
             'success_story_content': success_story_content,
@@ -180,7 +182,7 @@ def blog_home(request):
     )[0]
 
     articles_list = BlogPost.objects.all().order_by('-date_published')
-    paginator = Paginator(articles_list, 3)  # Show 10 articles per page
+    paginator = Paginator(articles_list, 5)  # Show 5 articles per page
 
     page = request.GET.get('page')
     try:
@@ -206,6 +208,7 @@ def blog_home(request):
 
     # Context data
     context = {
+        'title': 'Blog',
         'articles': articles,
         'lastest_posts': lastest_posts,
         'social_links': get_social_links(),
@@ -217,6 +220,12 @@ def blog_home(request):
 
 
 def blog_detail(request, post_slug):
+
+    about_content = HomePageContent.objects.get_or_create(
+        section_name='about',
+        defaults={'title': "VỀ MÌNH", 'content': "I find life better, and I'm happier, when things are nice and simple."}
+    )[0]
+
     # Fetch the blog post based on the provided slug
     post = get_object_or_404(BlogPost, slug=post_slug)
 
@@ -226,7 +235,9 @@ def blog_detail(request, post_slug):
 
     # Context data
     context = {
+        'title': post.title,
         'post': post,
+        'about_content': about_content,
         'lastest_posts': lastest_posts,
         'social_links': get_social_links(),
     }
@@ -248,7 +259,7 @@ def tech_blog_home(request):
 
     # Get technical articles list
     tech_articles_list = TechBlogPost.objects.all().order_by('-date_published')
-    paginator = Paginator(tech_articles_list, 3)  # Show 3 tech articles per page
+    paginator = Paginator(tech_articles_list, 5)  # Show 5 tech articles per page
 
     page = request.GET.get('page')
     try:
@@ -280,6 +291,7 @@ def tech_blog_home(request):
 
     # Context data
     context = {
+        'title': 'Tech Blog',
         'tech_articles': tech_articles,
         'latest_tech_posts': latest_tech_posts,
         'social_links': get_social_links(),
@@ -292,6 +304,11 @@ def tech_blog_home(request):
 
 
 def tech_blog_detail(request, post_slug):
+
+    about_content = HomePageContent.objects.get_or_create(
+        section_name='about',
+        defaults={'title': "VỀ MÌNH", 'content': "I find life better, and I'm happier, when things are nice and simple."}
+    )[0]
     # Fetch the tech blog post based on the provided slug
     tech_post = get_object_or_404(TechBlogPost, slug=post_slug)
 
@@ -300,7 +317,9 @@ def tech_blog_detail(request, post_slug):
 
     # Context data
     context = {
+        'title': tech_post.title,
         'tech_post': tech_post,
+        'about_content': about_content,
         'latest_tech_posts': latest_tech_posts,
         'social_links': get_social_links(),
     }
@@ -317,14 +336,15 @@ def ebook_pictures(request):
 
     # Get contex for web
     context = {
+        'title': 'Ebook Pictures',
         'cards': cards,
         'social_links': get_social_links(),
     }
 
-    if request.user.is_authenticated:
-        return render(request, 'ebook_pictures/ebook_pictures.html', context)
-    else:
-        return render(request, 'auth/login_required_prompt.html', context)
+    #if request.user.is_authenticated:
+    return render(request, 'ebook_pictures/ebook_pictures.html', context)
+    #else:
+    #   return render(request, 'auth/login_required_prompt.html', context)
 
 
 def ebook_picture_details(request, card_id):
@@ -333,6 +353,7 @@ def ebook_picture_details(request, card_id):
 
     # Get contex for web
     context = {
+        'title': card.title,
         'card': card,
         'images': images,
         'social_links': get_social_links(),

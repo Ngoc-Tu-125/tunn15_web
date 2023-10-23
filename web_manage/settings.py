@@ -21,15 +21,34 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-%au@mvn7izf-avpnpv#$8ph7)9-xp-1y%=^x9n-%zqgl5)jbj!'
+SECRET_KEY = 'E5VPOF%-=l$:8=7([Ki\'Ew=hoc"v]k+[Jm}9D9"U5\\p\'N1pF7w.Ngoctu125'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['ngoctu125.com', 'www.ngoctu125.com', '34.16.129.40', '127.0.0.1']
 
 
-# Application definition
+# Set the HSTS seconds to 1 year (be cautious with this setting)
+SECURE_HSTS_SECONDS = 31536000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+# Ensure all traffic is redirected to HTTPS
+#SECURE_SSL_REDIRECT = True
+# Ensure the session cookie is only sent over HTTPS
+SESSION_COOKIE_SECURE = True
+# Ensure the CSRF cookie is only sent over HTTPS
+CSRF_COOKIE_SECURE = True
+
+
+CSRF_COOKIE_DOMAIN = ".ngoctu125.com"
+CSRF_TRUSTED_ORIGINS = [
+    'https://ngoctu125.com',
+    'https://www.ngoctu125.com',
+]
+
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -128,7 +147,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -188,4 +209,4 @@ CKEDITOR_CONFIGS = {
 
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_ROOT = os.path.join(BASE_DIR, '..', 'media/')
