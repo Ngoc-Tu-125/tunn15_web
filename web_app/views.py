@@ -258,7 +258,7 @@ def tech_blog_home(request):
     )[0]
 
     # Get technical articles list
-    tech_articles_list = TechBlogPost.objects.all().order_by('-date_published')
+    tech_articles_list = TechBlogPost.objects.exclude(tech_type='raft').order_by('-date_published')
     paginator = Paginator(tech_articles_list, 5)  # Show 5 tech articles per page
 
     page = request.GET.get('page')
