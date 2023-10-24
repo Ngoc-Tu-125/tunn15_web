@@ -279,7 +279,7 @@ def tech_blog_home(request):
             article.class_name = "article-recent"
 
     # Fetch the three latest tech posts for the sidebar
-    latest_tech_posts = TechBlogPost.objects.all().order_by('-date_published')[:3]
+    latest_tech_posts = TechBlogPost.objects.exclude(tech_type='raft').order_by('-date_published')[:3]
 
     # Get tech blog type
     tech_blog_types = [
@@ -314,7 +314,7 @@ def tech_blog_detail(request, post_slug):
     tech_post = get_object_or_404(TechBlogPost, slug=post_slug)
 
     # Fetch the three latest tech posts for the sidebar
-    latest_tech_posts = TechBlogPost.objects.all().order_by('-date_published')[:3]
+    latest_tech_posts = TechBlogPost.objects.exclude(tech_type='raft').order_by('-date_published')[:3]
 
     # Context data
     context = {
