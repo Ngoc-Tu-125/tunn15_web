@@ -19,6 +19,17 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from web_app import views
+from django.contrib.sitemaps.views import sitemap
+from web_app.sitemaps import StaticViewSitemap, BlogSitemap, TechBlogSitemap, EbookPicturesSitemap
+
+
+sitemaps = {
+    'static': StaticViewSitemap,
+    'blog': BlogSitemap,
+    'techblog': TechBlogSitemap,
+    'ebook_pictures': EbookPicturesSitemap,
+}
+
 
 
 urlpatterns = [
@@ -49,4 +60,6 @@ urlpatterns = [
     path('check_email/', views.check_email_exists, name='check_email_exists'),
 
     path('filter_tech_blog_posts/', views.filter_tech_blog_posts, name='filter_tech_blog_posts'),
+
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
