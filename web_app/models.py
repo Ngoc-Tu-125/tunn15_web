@@ -10,6 +10,7 @@ from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 from PIL import Image
 from django.utils.html import format_html
+from django.urls import reverse
 
 from .managers import CustomUserManager
 
@@ -72,6 +73,9 @@ class BlogPost(models.Model):
             os.remove(os.path.join(settings.MEDIA_ROOT, self.image.path))
         super(BlogPost, self).delete(*args, **kwargs)
 
+    def get_absolute_url(self):
+        return reverse('blog_detail', args=[str(self.slug)])
+
 
 ####################################################################################
 # TECH BLOG POST MODELS
@@ -107,6 +111,9 @@ class TechBlogPost(models.Model):
         if self.image and os.path.isfile(os.path.join(settings.MEDIA_ROOT, self.image.path)):
             os.remove(os.path.join(settings.MEDIA_ROOT, self.image.path))
         super(TechBlogPost, self).delete(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('name_of_view_function', args=[str(self.slug)])
 
 
 ####################################################################################
@@ -150,6 +157,9 @@ class Card(models.Model):
         if self.image and os.path.isfile(os.path.join(settings.MEDIA_ROOT, self.image.path)):
             os.remove(os.path.join(settings.MEDIA_ROOT, self.image.path))
         super(Card, self).delete(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('ebook_picture_details', args=[str(self.id)])
 
     class Meta:
         ordering = ['order']
