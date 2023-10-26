@@ -74,7 +74,7 @@ class BlogPost(models.Model):
         super(BlogPost, self).delete(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('blog_detail', args=[str(self.slug)])
+        return reverse('blog', args=[str(self.slug)])
 
 
 ####################################################################################
@@ -113,7 +113,7 @@ class TechBlogPost(models.Model):
         super(TechBlogPost, self).delete(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('name_of_view_function', args=[str(self.slug)])
+        return reverse('tech_blog', args=[str(self.slug)])
 
 
 ####################################################################################
@@ -159,7 +159,7 @@ class Card(models.Model):
         super(Card, self).delete(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse('ebook_picture_details', args=[str(self.id)])
+        return reverse('ebook_pictures', args=[str(self.id)])
 
     class Meta:
         ordering = ['order']
